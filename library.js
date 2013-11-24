@@ -29,7 +29,7 @@
 
     Frame.prototype.addNode = function (x, y, z) {
         var geometry = new THREE.CubeGeometry(x, y, z);
-        var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+        var material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe: true});
         var cube = new THREE.Mesh(geometry, material);
         this.scene.add(cube);
     };
