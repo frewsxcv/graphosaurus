@@ -23,11 +23,6 @@
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setSize(width, height);
 
-        var pointLight = new THREE.PointLight(0xffffff);
-        pointLight.position.x = 10;
-        pointLight.position.y = 10;
-        pointLight.position.z = 10;
-
         elem.appendChild(this.renderer.domElement);
     };
     window.Frame = Frame;
