@@ -34,9 +34,24 @@ window.G = (function () {
         this.renderer.setSize(width, height);
 
         elem.appendChild(this.renderer.domElement);
+
+        this._initControls();
     };
 
     var frame = shortcutNew(Frame);
+
+    Frame.prototype._initControls = function () {
+        var self = this;
+
+        this.controls = new THREE.TrackballControls(this.camera);
+
+        // A S D
+        this.controls.keys = [ 65, 83, 68 ];
+
+        this.controls.addEventListener('change', function () {
+            self.renderer.render(self.scene, self.camera);
+        });
+    };
 
     Frame.prototype.addNode = function (node) {
         this.scene.add(node.mesh);
@@ -47,7 +62,12 @@ window.G = (function () {
     };
 
     Frame.prototype.render = function () {
-        this.renderer.render(this.scene, this.camera);
+        var self = this;
+
+        (function animate() {
+            window.requestAnimationFrame(animate);
+            self.controls.update();
+        }());
     };
 
     // Node -------------------------------------------------------------------
