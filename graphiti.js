@@ -43,6 +43,7 @@ window.G = (function () {
 
     Node.prototype.addTo = function (frame) {
         frame.addNode(this);
+        return this;
     };
 
     return {
