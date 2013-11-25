@@ -21,7 +21,7 @@ window.G = (function () {
 
         this.scene = new THREE.Scene();
 
-        this._initCamera(width, height);
+        this._initCamera(width/height);
         this.scene.add();
 
         this._initRenderer(width, height);
@@ -32,9 +32,8 @@ window.G = (function () {
 
     var frame = shortcutNew(Frame);
 
-    Frame.prototype._initCamera = function (width, height) {
+    Frame.prototype._initCamera = function (aspect) {
         var viewAngle = 45;
-        var aspect = width / (1.0 * height);
         var near = 0.1;
         var far = 10000;
 
