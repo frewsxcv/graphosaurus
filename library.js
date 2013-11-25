@@ -1,4 +1,4 @@
-(function () {
+window.G = (function () {
     "use strict";
 
     var Frame = function (elem) {
@@ -25,7 +25,6 @@
 
         elem.appendChild(this.renderer.domElement);
     };
-    window.Frame = Frame;
 
     Frame.prototype.addNode = function (node) {
         this.scene.add(node.mesh);
@@ -41,9 +40,13 @@
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position = {x: x, y: y, z: z};
     };
-    window.Node = Node;
 
     Node.prototype.addTo = function (frame) {
         frame.addNode(this);
+    };
+
+    return {
+        "Frame": Frame,
+        "Node": Node,
     };
 }());
