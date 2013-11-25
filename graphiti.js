@@ -55,9 +55,6 @@ window.G = (function () {
         var self = this;
         var controls = new THREE.TrackballControls(this.camera);
 
-        // A S D
-        controls.keys = [ 65, 83, 68 ];
-
         controls.addEventListener('change', function () {
             self.renderer.render(self.scene, self.camera);
         });
