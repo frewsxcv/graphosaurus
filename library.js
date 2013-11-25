@@ -27,15 +27,19 @@
     };
     window.Frame = Frame;
 
-    Frame.prototype.addNode = function (x, y, z) {
-        var geometry = new THREE.SphereGeometry(1, 4, 4);
-        var material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe: true});
-        var sphere = new THREE.Mesh(geometry, material);
-        sphere.position = {x: x, y: y, z: z};
-        this.scene.add(sphere);
+    Frame.prototype.addNode = function (node) {
+        this.scene.add(node.mesh);
     };
 
     Frame.prototype.render = function () {
         this.renderer.render(this.scene, this.camera);
     };
+
+    var Node = function (x, y, z) {
+        var geometry = new THREE.SphereGeometry(1, 4, 4);
+        var material = new THREE.MeshBasicMaterial({color: 0x00ff00, wireframe: true});
+        this.mesh = new THREE.Mesh(geometry, material);
+        this.mesh.position = {x: x, y: y, z: z};
+    };
+    window.Node = Node;
 }());
