@@ -30,6 +30,10 @@ window.G = (function () {
         this.scene.add(node.mesh);
     };
 
+    Frame.prototype.addEdge = function (edge) {
+        this.scene.add(edge.line);
+    };
+
     Frame.prototype.render = function () {
         this.renderer.render(this.scene, this.camera);
     };
@@ -46,8 +50,22 @@ window.G = (function () {
         return this;
     };
 
+    var Edge = function (n1, n2) {
+        var material = new THREE.LineBasicMaterial({color: 0x0000ff});
+        var geometry = new THREE.Geometry();
+
+        var n1Coords = n1.mesh.position;
+        var n2Coords = n2.mesh.position;
+
+        geometry.vertices.push(n1Coords);
+        geometry.vertices.push(n2Coords);
+
+        this.line = new THREE.Line(geometry, material);
+    };
+
     return {
         "Frame": Frame,
         "Node": Node,
+        "Edge": Edge,
     };
 }());
