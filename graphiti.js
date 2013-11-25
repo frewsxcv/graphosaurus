@@ -53,7 +53,7 @@ window.G = (function () {
     // Node -------------------------------------------------------------------
 
     var Node = function (x, y, z) {
-        var geometry = new THREE.SphereGeometry(0.5, 8, 8);
+        var geometry = new THREE.SphereGeometry(0.2, 8, 8);
         var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position = new THREE.Vector3(x, y, z);
