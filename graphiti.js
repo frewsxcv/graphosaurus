@@ -63,6 +63,11 @@ window.G = (function () {
         this.line = new THREE.Line(geometry, material);
     };
 
+    Edge.prototype.addTo = function (frame) {
+        frame.addEdge(this);
+        return this;
+    };
+
     return {
         "Frame": Frame,
         "Node": Node,
