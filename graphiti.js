@@ -1,6 +1,14 @@
 window.G = (function () {
     "use strict";
 
+    var shortcutNew = function (Constructor) {
+        return function () {
+            var instance = Object.create(Constructor.prototype);
+            Constructor.apply(instance, arguments);
+            return instance;
+        };
+    }
+
     var Frame = function (elem) {
         if (typeof elem === 'string') {
             elem = document.getElementById(elem);
@@ -26,6 +34,8 @@ window.G = (function () {
         elem.appendChild(this.renderer.domElement);
     };
 
+    var frame = shortcutNew(Frame);
+
     Frame.prototype.addNode = function (node) {
         this.scene.add(node.mesh);
     };
@@ -45,6 +55,8 @@ window.G = (function () {
         this.mesh.position = new THREE.Vector3(x, y, z);
     };
 
+    var node = shortcutNew(Node);
+
     Node.prototype.addTo = function (frame) {
         frame.addNode(this);
         return this;
@@ -63,6 +75,8 @@ window.G = (function () {
         this.line = new THREE.Line(geometry, material);
     };
 
+    var edge = shortcutNew(Edge);
+
     Edge.prototype.addTo = function (frame) {
         frame.addEdge(this);
         return this;
@@ -70,7 +84,10 @@ window.G = (function () {
 
     return {
         "Frame": Frame,
+        "frame": frame,
         "Node": Node,
+        "node": node,
         "Edge": Edge,
+        "edge": edge,
     };
 }());
