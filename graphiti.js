@@ -9,6 +9,8 @@ window.G = (function () {
         };
     }
 
+    // Frame ------------------------------------------------------------------
+
     var Frame = function (elem) {
         if (typeof elem === 'string') {
             elem = document.getElementById(elem);
@@ -48,6 +50,8 @@ window.G = (function () {
         this.renderer.render(this.scene, this.camera);
     };
 
+    // Node -------------------------------------------------------------------
+
     var Node = function (x, y, z) {
         var geometry = new THREE.SphereGeometry(0.5, 8, 8);
         var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
@@ -61,6 +65,8 @@ window.G = (function () {
         frame.addNode(this);
         return this;
     };
+
+    // Edge -------------------------------------------------------------------
 
     var Edge = function (n1, n2) {
         var material = new THREE.LineBasicMaterial({color: 0x0000ff});
