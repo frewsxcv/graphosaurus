@@ -16,23 +16,15 @@ window.G = (function () {
             elem = document.getElementById(elem);
         }
 
-        var height = elem.scrollHeight;
         var width = elem.scrollWidth;
-
-        var viewAngle = 45;
-        var aspect = width / (1.0 * height);
-        var near = 0.1;
-        var far = 10000;
+        var height = elem.scrollHeight;
 
         this.scene = new THREE.Scene();
 
-        this.camera = new THREE.PerspectiveCamera(viewAngle, aspect, near, far);
-        this.camera.position.z = 10;
-        this.scene.add(this.camera);
+        this._initCamera(width, height);
+        this.scene.add();
 
-        this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setSize(width, height);
-
+        this._initRenderer(width, height);
         elem.appendChild(this.renderer.domElement);
 
         this._initControls();
@@ -40,17 +32,37 @@ window.G = (function () {
 
     var frame = shortcutNew(Frame);
 
+    Frame.prototype._initCamera = function (width, height) {
+        var viewAngle = 45;
+        var aspect = width / (1.0 * height);
+        var near = 0.1;
+        var far = 10000;
+
+        var camera = new THREE.PerspectiveCamera(viewAngle, aspect, near, far);
+        camera.position.z = 10;
+
+        this.camera = camera;
+    };
+
+    Frame.prototype._initRenderer = function (width, height) {
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(width, height);
+
+        this.renderer = renderer;
+    };
+
     Frame.prototype._initControls = function () {
         var self = this;
-
-        this.controls = new THREE.TrackballControls(this.camera);
+        var controls = new THREE.TrackballControls(this.camera);
 
         // A S D
-        this.controls.keys = [ 65, 83, 68 ];
+        controls.keys = [ 65, 83, 68 ];
 
-        this.controls.addEventListener('change', function () {
+        controls.addEventListener('change', function () {
             self.renderer.render(self.scene, self.camera);
         });
+
+        this.controls = controls;
     };
 
     Frame.prototype.addNode = function (node) {
