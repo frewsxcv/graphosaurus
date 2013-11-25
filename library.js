@@ -42,4 +42,8 @@
         this.mesh.position = {x: x, y: y, z: z};
     };
     window.Node = Node;
+
+    Node.prototype.addTo = function (frame) {
+        frame.addNode(this);
+    };
 }());
