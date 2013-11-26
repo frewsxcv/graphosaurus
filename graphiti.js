@@ -7,7 +7,7 @@ window.G = (function () {
             Constructor.apply(instance, arguments);
             return instance;
         };
-    }
+    };
 
     // Frame ------------------------------------------------------------------
 
