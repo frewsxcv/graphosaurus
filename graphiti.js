@@ -28,6 +28,9 @@ window.G = (function () {
         elem.appendChild(this.renderer.domElement);
 
         this._initControls();
+
+        this._initNodes();
+        this.scene.add(this.particleSystem);
     };
 
     var frame = shortcutNew(Frame);
@@ -61,8 +64,17 @@ window.G = (function () {
         this.controls = controls;
     };
 
+    Frame.prototype._initNodes = function () {
+        var material = new THREE.ParticleSystemMaterial({
+            size: 4,
+            sizeAttenuation: false,
+        });
+        this.particles = new THREE.Geometry();
+        this.particleSystem = new THREE.ParticleSystem(this.particles, material);
+    };
+
     Frame.prototype.addNode = function (node) {
-        this.scene.add(node.mesh);
+        this.particles.vertices.push(node.position);
     };
 
     Frame.prototype.addEdge = function (edge) {
@@ -81,10 +93,7 @@ window.G = (function () {
     // Node -------------------------------------------------------------------
 
     var Node = function (x, y, z) {
-        var geometry = new THREE.SphereGeometry(0.2, 8, 8);
-        var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-        this.mesh = new THREE.Mesh(geometry, material);
-        this.mesh.position = new THREE.Vector3(x, y, z);
+        this.position = new THREE.Vector3(x, y, z);
     };
 
     var node = shortcutNew(Node);
@@ -100,8 +109,8 @@ window.G = (function () {
         var material = new THREE.LineBasicMaterial({color: 0x0000ff});
         var geometry = new THREE.Geometry();
 
-        var n1Coords = n1.mesh.position;
-        var n2Coords = n2.mesh.position;
+        var n1Coords = n1.position;
+        var n2Coords = n2.position;
 
         geometry.vertices.push(n1Coords);
         geometry.vertices.push(n2Coords);
