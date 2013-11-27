@@ -1,4 +1,4 @@
-define(function () {
+define(["./controls"], function (TrackballControls) {
     "use strict";
 
     var Frame = function (elem) {
@@ -43,7 +43,7 @@ define(function () {
 
     Frame.prototype._initControls = function () {
         var self = this;
-        var controls = new THREE.TrackballControls(this.camera);
+        var controls = new TrackballControls(this.camera);
 
         controls.addEventListener('change', function () {
             self.renderer.render(self.scene, self.camera);
