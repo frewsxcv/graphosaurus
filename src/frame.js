@@ -1,4 +1,4 @@
-define(["./controls", "../lib/bounding-sphere/BoundingSphere"], function (TrackballControls, BoundingSphere) {
+define(["../lib/trackball-controls/TrackballControls", "../lib/bounding-sphere/BoundingSphere"], function (TrackballControls, BoundingSphere) {
     "use strict";
 
     var Frame = function (elem) {
