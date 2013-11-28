@@ -12,7 +12,6 @@ define(["../lib/trackball-controls/TrackballControls", "../lib/bounding-sphere/B
         this.scene = new THREE.Scene();
 
         this._initCamera(width/height);
-        this.scene.add();
 
         this._initRenderer(width, height);
         elem.appendChild(this.renderer.domElement);
