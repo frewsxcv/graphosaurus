@@ -1,4 +1,4 @@
-define(["./controls"], function (TrackballControls) {
+define(["./controls", "./Core/BoundingSphere"], function (TrackballControls, BoundingSphere) {
     "use strict";
 
     var Frame = function (elem) {
@@ -69,8 +69,16 @@ define(["./controls"], function (TrackballControls) {
         this.scene.add(edge.line);
     };
 
+    Frame.prototype.centerView = function () {
+        var sphere = BoundingSphere.fromPoints(this.particles.vertices);
+        var center = new THREE.Vector3(sphere.center.x, sphere.center.y, sphere.center.z);
+        this.controls.target = center;
+    };
+
     Frame.prototype.render = function () {
         var self = this;
+
+        this.centerView();
 
         (function animate() {
             window.requestAnimationFrame(animate);
