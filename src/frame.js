@@ -1,4 +1,4 @@
-define(["../lib/trackball-controls/TrackballControls", "../lib/bounding-sphere/BoundingSphere"], function (TrackballControls, BoundingSphere) {
+define(["../lib/trackball-controls/TrackballControls"], function (TrackballControls) {
     "use strict";
 
     var Frame = function (elem) {
@@ -79,7 +79,8 @@ define(["../lib/trackball-controls/TrackballControls", "../lib/bounding-sphere/B
     };
 
     Frame.prototype.centerView = function () {
-        var sphere = BoundingSphere.fromPoints(this.particles.vertices);
+        this.particles.computeBoundingSphere();
+        var sphere = this.particles.boundingSphere;
         var center = new THREE.Vector3(sphere.center.x, sphere.center.y, sphere.center.z);
         this.controls.target = center;
     };
