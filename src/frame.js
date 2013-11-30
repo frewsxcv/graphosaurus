@@ -23,6 +23,9 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this._initNodes();
         this.scene.add(this.particleSystem);
 
+        this._initEdges();
+        this.scene.add(this.line);
+
         window.addEventListener('resize', function () {
             self.camera.aspect = window.innerWidth / window.innerHeight;
             self.camera.updateProjectionMatrix();
@@ -70,12 +73,19 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.particleSystem = new THREE.ParticleSystem(this.particles, material);
     };
 
+    Frame.prototype._initEdges = function () {
+        this.edges = new THREE.Geometry();
+        var edgeMaterial = new THREE.LineBasicMaterial({color: 0x0000ff});
+        this.line = new THREE.Line(this.edges, edgeMaterial, THREE.LinePieces);
+    };
+
     Frame.prototype.addNode = function (node) {
         this.particles.vertices.push(node.position);
     };
 
     Frame.prototype.addEdge = function (edge) {
-        this.scene.add(edge.line);
+        this.edges.vertices.push(edge.n1Coords);
+        this.edges.vertices.push(edge.n2Coords);
     };
 
     Frame.prototype.centerView = function () {
