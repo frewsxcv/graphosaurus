@@ -2,6 +2,8 @@ define(["../lib/trackball-controls/TrackballControls", "../lib/bounding-sphere/B
     "use strict";
 
     var Frame = function (elem) {
+        var self = this;
+
         if (typeof elem === 'string') {
             elem = document.getElementById(elem);
         }
@@ -20,6 +22,14 @@ define(["../lib/trackball-controls/TrackballControls", "../lib/bounding-sphere/B
 
         this._initNodes();
         this.scene.add(this.particleSystem);
+
+        window.addEventListener('resize', function () {
+            self.camera.aspect = window.innerWidth / window.innerHeight;
+            self.camera.updateProjectionMatrix();
+
+            self.renderer.setSize(window.innerWidth, window.innerHeight);
+            self.renderer.render(self.scene, self.camera);
+        }, false);
     };
 
     Frame.prototype._initCamera = function (aspect) {
