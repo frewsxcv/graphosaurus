@@ -41,7 +41,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var far = 10000;
 
         var camera = new THREE.PerspectiveCamera(viewAngle, aspect, near, far);
-        camera.position.z = 10;
+        camera.position.z = 15;
 
         this.camera = camera;
     };
@@ -89,10 +89,22 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype.centerView = function () {
+        // Calculate bounding sphere
         this.particles.computeBoundingSphere();
         var sphere = this.particles.boundingSphere;
-        var center = new THREE.Vector3(sphere.center.x, sphere.center.y, sphere.center.z);
-        this.controls.target = center;
+        var center = [-sphere.center.x, -sphere.center.y, -sphere.center.z];
+
+        // Create/apply translation transformation matrix
+        var translation = new THREE.Matrix4();
+        translation.makeTranslation.apply(translation, center);
+        this.particles.applyMatrix(translation);
+
+        // Determine scale to normalize coordinates
+        var scale = 5 / sphere.radius;
+
+        // Scale coordinates
+        this.particleSystem.scale.set(scale, scale, scale);
+        this.line.scale.set(scale, scale, scale);
     };
 
     Frame.prototype.render = function () {
