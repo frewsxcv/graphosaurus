@@ -10,6 +10,6 @@ define(function () {
         frame.addEdge(this);
         return this;
     };
-    
+
     return Edge;
 });
