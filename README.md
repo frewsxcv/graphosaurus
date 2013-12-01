@@ -8,10 +8,6 @@ A three-dimensional static graph viewer.
 
 ## Third party libraries
 
-* `lib/bounding-sphere`
- * Used to calculate the [bounding sphere](https://en.wikipedia.org/wiki/Minimum_bounding_sphere) for a set of coordinates
- * Taken from [virtual-world-framework/vwf](https://github.com/virtual-world-framework/vwf)
- * [License](https://github.com/virtual-world-framework/vwf/blob/master/LICENSE)
 * `lib/tracking-controls`
  * Used for graph movement/controls
  * Taken from [mrdoob/three.js](https://github.com/mrdoob/three.js/blob/master/examples/js/controls/TrackballControls.js)
