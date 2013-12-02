@@ -1,7 +1,7 @@
 define(["../lib/trackball-controls/TrackballControls"], function (TrackballControls) {
     "use strict";
 
-    var Frame = function (elem) {
+    var Frame = function (elem, graph) {
         var self = this;
 
         if (typeof elem === 'string') {
@@ -21,9 +21,11 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this._initControls();
 
         this._initNodes();
+        this.particles.vertices = graph.nodes;
         this.scene.add(this.particleSystem);
 
         this._initEdges();
+        this.edges.vertices = graph.edges;
         this.scene.add(this.line);
 
         window.addEventListener('resize', function () {
@@ -33,6 +35,10 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             self.renderer.setSize(window.innerWidth, window.innerHeight);
             self.renderer.render(self.scene, self.camera);
         }, false);
+
+        this.centerView();
+
+        this._animate();
     };
 
     Frame.prototype._initCamera = function (aspect) {
@@ -79,15 +85,6 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.line = new THREE.Line(this.edges, edgeMaterial, THREE.LinePieces);
     };
 
-    Frame.prototype.addNode = function (node) {
-        this.particles.vertices.push(node.position);
-    };
-
-    Frame.prototype.addEdge = function (edge) {
-        this.edges.vertices.push(edge.n1Coords);
-        this.edges.vertices.push(edge.n2Coords);
-    };
-
     Frame.prototype.centerView = function () {
         // Calculate bounding sphere
         this.particles.computeBoundingSphere();
@@ -107,10 +104,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.line.scale.set(scale, scale, scale);
     };
 
-    Frame.prototype.render = function () {
+    Frame.prototype._animate = function () {
         var self = this;
-
-        this.centerView();
 
         (function animate() {
             window.requestAnimationFrame(animate);

@@ -1,4 +1,4 @@
-define(["./frame", "./node", "./edge", "./utils"], function (Frame, Node, Edge, utils) {
+define(["./frame", "./node", "./edge", "./graph", "./utils"], function (Frame, Node, Edge, Graph, utils) {
     "use strict";
 
     return {
@@ -10,5 +10,8 @@ define(["./frame", "./node", "./edge", "./utils"], function (Frame, Node, Edge, 
 
         Edge: Edge,
         edge: utils.shortcutNew(Edge),
+
+        Graph: Graph,
+        graph: utils.shortcutNew(Graph),
     };
 });

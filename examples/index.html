@@ -20,17 +20,17 @@
     <script src="myfile.json"></script>
 
     <script>
-      var G, frame;
+      var G, frame, graph;
       require(['../src/graphosaurus'], function (g) {
         G = g;
-        frame = new G.Frame('frame');
+        graph = G.graph();
         var nodes = []
         var lookup = {};
 
         // Add nodes
         corey.nodes.forEach(function (node) {
           var gnode = G.node.apply(this, node.coords);
-          gnode.addTo(frame);
+          gnode.addTo(graph);
 
           nodes.push(gnode);
           lookup[node.id] = gnode;
@@ -41,11 +41,11 @@
           var node1 = nodes[i];
           corey.adjacency[i].forEach(function (other) {
               var node2 = lookup[other.id];
-              G.edge(node1, node2).addTo(frame);
+              G.edge(node1, node2).addTo(graph);
           });
         }
 
-        frame.render();
+        frame = graph.renderIn('frame');
       });
     </script>
   </body>

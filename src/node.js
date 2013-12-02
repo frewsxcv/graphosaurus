@@ -5,8 +5,8 @@ define(function () {
         this.position = new THREE.Vector3(x, y, z);
     };
 
-    Node.prototype.addTo = function (frame) {
-        frame.addNode(this);
+    Node.prototype.addTo = function (graph) {
+        graph.addNode(this);
         return this;
     };
     

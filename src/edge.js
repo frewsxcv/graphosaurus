@@ -6,8 +6,8 @@ define(function () {
         this.n2Coords = node2.position;
     };
 
-    Edge.prototype.addTo = function (frame) {
-        frame.addEdge(this);
+    Edge.prototype.addTo = function (graph) {
+        graph.addEdge(this);
         return this;
     };
 
