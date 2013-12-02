@@ -11,8 +11,8 @@ define(["./frame"], function (Frame) {
     };
 
     Graph.prototype.addEdge = function (edge) {
-        this.edges.push(edge.n1Coords);
-        this.edges.push(edge.n2Coords);
+        this.edges.push(edge.nodes[0].position);
+        this.edges.push(edge.nodes[1].position);
     };
 
     Graph.prototype.renderIn = function (elem) {
