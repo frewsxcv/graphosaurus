@@ -34,7 +34,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             self.renderer.render(self.scene, self.camera);
         }, false);
 
-        this.centerView();
+        this._normalize();
 
         this._animate();
     };
@@ -94,7 +94,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.line = new THREE.Line(this.edges, edgeMaterial, THREE.LinePieces);
     };
 
-    Frame.prototype.centerView = function () {
+    Frame.prototype._normalize = function () {
         // Calculate bounding sphere
         this.particles.computeBoundingSphere();
         var sphere = this.particles.boundingSphere;
