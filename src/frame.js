@@ -75,7 +75,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         });
         this.particles = new THREE.Geometry();
         for (var i = 0; i < nodes.length; i++) {
-            this.particles.vertices.push(nodes[i].position);
+            var vertex = new THREE.Vector3().fromArray(nodes[i].position);
+            this.particles.vertices.push(vertex);
         }
         this.particleSystem = new THREE.ParticleSystem(this.particles, material);
     };
@@ -83,8 +84,11 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     Frame.prototype._initEdges = function (edges) {
         this.edges = new THREE.Geometry();
         for (var i = 0; i < edges.length; i++) {
-            this.edges.vertices.push(edges[i].nodes[0].position);
-            this.edges.vertices.push(edges[i].nodes[1].position);
+            var nodes = edges[i].nodes;
+            var vertex = new THREE.Vector3().fromArray(nodes[0].position);
+            this.edges.vertices.push(vertex);
+            vertex = new THREE.Vector3().fromArray(nodes[1].position);
+            this.edges.vertices.push(vertex);
         }
         var edgeMaterial = new THREE.LineBasicMaterial({color: 0x0000ff});
         this.line = new THREE.Line(this.edges, edgeMaterial, THREE.LinePieces);
@@ -100,6 +104,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var translation = new THREE.Matrix4();
         translation.makeTranslation.apply(translation, center);
         this.particles.applyMatrix(translation);
+        this.edges.applyMatrix(translation);
 
         // Determine scale to normalize coordinates
         var scale = 5 / sphere.radius;
