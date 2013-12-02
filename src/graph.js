@@ -7,12 +7,11 @@ define(["./frame"], function (Frame) {
     };
 
     Graph.prototype.addNode = function (node) {
-        this.nodes.push(node.position);
+        this.nodes.push(node);
     };
 
     Graph.prototype.addEdge = function (edge) {
-        this.edges.push(edge.nodes[0].position);
-        this.edges.push(edge.nodes[1].position);
+        this.edges.push(edge);
     };
 
     Graph.prototype.renderIn = function (elem) {

@@ -20,12 +20,10 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
 
         this._initControls();
 
-        this._initNodes();
-        this.particles.vertices = graph.nodes;
+        this._initNodes(graph.nodes);
         this.scene.add(this.particleSystem);
 
-        this._initEdges();
-        this.edges.vertices = graph.edges;
+        this._initEdges(graph.edges);
         this.scene.add(this.line);
 
         window.addEventListener('resize', function () {
@@ -70,17 +68,24 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.controls = controls;
     };
 
-    Frame.prototype._initNodes = function () {
+    Frame.prototype._initNodes = function (nodes) {
         var material = new THREE.ParticleSystemMaterial({
             size: 4,
             sizeAttenuation: false,
         });
         this.particles = new THREE.Geometry();
+        for (var i = 0; i < nodes.length; i++) {
+            this.particles.vertices.push(nodes[i].position);
+        }
         this.particleSystem = new THREE.ParticleSystem(this.particles, material);
     };
 
-    Frame.prototype._initEdges = function () {
+    Frame.prototype._initEdges = function (edges) {
         this.edges = new THREE.Geometry();
+        for (var i = 0; i < edges.length; i++) {
+            this.edges.vertices.push(edges[i].nodes[0].position);
+            this.edges.vertices.push(edges[i].nodes[1].position);
+        }
         var edgeMaterial = new THREE.LineBasicMaterial({color: 0x0000ff});
         this.line = new THREE.Line(this.edges, edgeMaterial, THREE.LinePieces);
     };
