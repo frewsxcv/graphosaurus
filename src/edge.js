@@ -1,9 +1,9 @@
 define(function () {
     "use strict";
 
-    var Edge = function (n1, n2) {
-        this.n1Coords = n1.position;
-        this.n2Coords = n2.position;
+    var Edge = function (node1, node2) {
+        this.n1Coords = node1.position;
+        this.n2Coords = node2.position;
     };
 
     Edge.prototype.addTo = function (frame) {
