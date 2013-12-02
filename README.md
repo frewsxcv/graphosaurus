@@ -6,6 +6,10 @@ A three-dimensional static graph viewer.
 
 [John Conway](https://en.wikipedia.org/wiki/User:John.Conway)'s illustration of our glorious leader, the ~~[gryposaurus](https://en.wikipedia.org/wiki/gryposaurus)~~ graphosaurus.
 
+## Build
+
+To build the minified version of Graphosaurus, run `./build.sh`. A new file `graphosaurus.min.js` will be outputted in the `dist/` directory.
+
 ## Third party libraries
 
 * `lib/tracking-controls`
