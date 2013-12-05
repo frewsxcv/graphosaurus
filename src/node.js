@@ -9,6 +9,6 @@ define(function () {
         graph.addNode(this);
         return this;
     };
-    
+
     return Node;
 });
