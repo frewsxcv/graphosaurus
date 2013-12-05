@@ -10,21 +10,14 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
 
         var width = elem.scrollWidth;
         var height = elem.scrollHeight;
+        var aspectRatio = width/height;
 
-        this.scene = new THREE.Scene();
-
-        this._initCamera(width/height);
-
-        this._initRenderer(width, height);
-        elem.appendChild(this.renderer.domElement);
-
+        this._initScene();
+        this._initCamera(aspectRatio);
+        this._initRenderer(width, height, elem);
         this._initControls();
-
         this._initNodes(graph.nodes);
-        this.scene.add(this.particleSystem);
-
         this._initEdges(graph.edges);
-        this.scene.add(this.line);
 
         window.addEventListener('resize', function () {
             self.camera.aspect = window.innerWidth / window.innerHeight;
@@ -35,8 +28,11 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         }, false);
 
         this._normalize();
-
         this._animate();
+    };
+
+    Frame.prototype._initScene = function () {
+        this.scene = new THREE.Scene();
     };
 
     Frame.prototype._initCamera = function (aspect) {
@@ -50,9 +46,10 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.camera = camera;
     };
 
-    Frame.prototype._initRenderer = function (width, height) {
+    Frame.prototype._initRenderer = function (width, height, elem) {
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(width, height);
+        elem.appendChild(renderer.domElement);
 
         this.renderer = renderer;
     };
@@ -79,6 +76,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             this.particles.vertices.push(vertex);
         }
         this.particleSystem = new THREE.ParticleSystem(this.particles, material);
+        this.scene.add(this.particleSystem);
     };
 
     Frame.prototype._initEdges = function (edges) {
@@ -92,6 +90,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         }
         var edgeMaterial = new THREE.LineBasicMaterial({color: 0x0000ff});
         this.line = new THREE.Line(this.edges, edgeMaterial, THREE.LinePieces);
+        this.scene.add(this.line);
     };
 
     Frame.prototype._normalize = function () {
