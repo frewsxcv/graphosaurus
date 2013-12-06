@@ -1,9 +1,9 @@
 define(function () {
     "use strict";
 
-    var Node = function (pos, options) {
+    var Node = function (pos, opts) {
         this._pos = new THREE.Vector3().fromArray(pos);
-        this._initOpts(options);
+        this._initOpts(opts);
     };
 
     Node.prototype._initOpts = function (options) {
