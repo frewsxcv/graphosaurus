@@ -3,12 +3,16 @@ define(function () {
 
     var Node = function (position, options) {
         this._position = new THREE.Vector3().fromArray(position);
-        this._initOptions();
-        this.setOptions(options);
+        this._initOptions(options);
     };
 
-    Node.prototype._initOptions = function () {
-        this._color = new THREE.Color("white");
+    Node.prototype._initOptions = function (options) {
+        options = options || {};
+
+        var color = options.hasOwnProperty("color") ? options.color : "white";
+        this._color = new THREE.Color(color);
+
+        return this;
     };
 
     Node.prototype.setPosition = function (position) {
@@ -18,17 +22,6 @@ define(function () {
 
     Node.prototype.getPosition = function () {
         return this._position.toArray();
-    };
-
-    Node.prototype.setOptions = function (options) {
-        if (!options) {
-            return;
-        }
-
-        if (options.hasOwnProperty("color")) {
-            this.setColor(options.color);
-        }
-        return this;
     };
 
     Node.prototype.setColor = function (color) {
