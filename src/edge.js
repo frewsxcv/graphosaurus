@@ -1,8 +1,17 @@
 define(function () {
     "use strict";
 
-    var Edge = function (node1, node2) {
-        this.nodes = [node1, node2];
+    var Edge = function (nodes) {
+        this.setNodes(nodes);
+    };
+
+    Edge.prototype.setNodes = function (nodes) {
+        this._nodes = nodes;
+        return this;
+    };
+
+    Edge.prototype.getNodes = function () {
+        return this._nodes;
     };
 
     Edge.prototype.addTo = function (graph) {

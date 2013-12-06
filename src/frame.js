@@ -87,7 +87,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     Frame.prototype._initEdges = function (edges) {
         this.edges = new THREE.Geometry();
         for (var i = 0; i < edges.length; i++) {
-            var nodes = edges[i].nodes;
+            var nodes = edges[i].getNodes();
             this.edges.vertices.push(nodes[0]._position.clone());
             this.edges.vertices.push(nodes[1]._position.clone());
         }

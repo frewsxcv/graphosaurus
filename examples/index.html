@@ -41,7 +41,7 @@
           var node1 = nodes[i];
           corey.adjacency[i].forEach(function (other) {
               var node2 = lookup[other.id];
-              G.edge(node1, node2).addTo(graph);
+              G.edge([node1, node2]).addTo(graph);
           });
         }
 
