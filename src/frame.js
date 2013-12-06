@@ -69,11 +69,16 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var material = new THREE.ParticleSystemMaterial({
             size: 4,
             sizeAttenuation: false,
+            vertexColors: true,
         });
         this.particles = new THREE.Geometry();
         for (var i = 0; i < nodes.length; i++) {
-            var vertex = new THREE.Vector3().fromArray(nodes[i].position);
+            var node = nodes[i];
+            var vertex = new THREE.Vector3().fromArray(node.position);
+            var color = node.getColor();
+
             this.particles.vertices.push(vertex);
+            this.particles.colors.push(color);
         }
         this.particleSystem = new THREE.ParticleSystem(this.particles, material);
         this.scene.add(this.particleSystem);
