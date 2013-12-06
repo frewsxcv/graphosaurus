@@ -75,7 +75,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         for (var i = 0; i < nodes.length; i++) {
             var node = nodes[i];
             var vertex = node._position.clone();
-            var color = node.getColor();
+            var color = node._color.clone();
 
             this.particles.vertices.push(vertex);
             this.particles.colors.push(color);

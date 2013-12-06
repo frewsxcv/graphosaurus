@@ -39,7 +39,7 @@ define(function () {
     };
 
     Node.prototype.getColor = function () {
-        return this._color;
+        return this._color.getHexString();
     };
 
     Node.prototype.addTo = function (graph) {
