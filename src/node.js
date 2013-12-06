@@ -1,12 +1,12 @@
 define(function () {
     "use strict";
 
-    var Node = function (position, options) {
-        this._position = new THREE.Vector3().fromArray(position);
-        this._initOptions(options);
+    var Node = function (pos, options) {
+        this._pos = new THREE.Vector3().fromArray(pos);
+        this._initOpts(options);
     };
 
-    Node.prototype._initOptions = function (options) {
+    Node.prototype._initOpts = function (options) {
         options = options || {};
 
         var color = options.hasOwnProperty("color") ? options.color : "white";
@@ -15,13 +15,13 @@ define(function () {
         return this;
     };
 
-    Node.prototype.setPosition = function (position) {
-        this._position.fromArray(position);
+    Node.prototype.setPos = function (pos) {
+        this._pos.fromArray(pos);
         return this;
     };
 
-    Node.prototype.getPosition = function () {
-        return this._position.toArray();
+    Node.prototype.getPos = function () {
+        return this._pos.toArray();
     };
 
     Node.prototype.setColor = function (color) {
