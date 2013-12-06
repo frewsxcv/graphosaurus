@@ -3,15 +3,15 @@ define(["./frame", "./node", "./edge", "./graph", "./utils"], function (Frame, N
 
     return {
         Frame: Frame,
-        frame: utils.shortcutNew(Frame),
+        frame: utils.noNew(Frame),
 
         Node: Node,
-        node: utils.shortcutNew(Node),
+        node: utils.noNew(Node),
 
         Edge: Edge,
-        edge: utils.shortcutNew(Edge),
+        edge: utils.noNew(Edge),
 
         Graph: Graph,
-        graph: utils.shortcutNew(Graph),
+        graph: utils.noNew(Graph),
     };
 });

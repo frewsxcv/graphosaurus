@@ -1,7 +1,7 @@
 define(function () {
     "use strict";
 
-    var shortcutNew = function (Constructor) {
+    var noNew = function (Constructor) {
         return function () {
             var instance = Object.create(Constructor.prototype);
             Constructor.apply(instance, arguments);
@@ -10,6 +10,6 @@ define(function () {
     };
 
     return {
-        shortcutNew: shortcutNew,
+        noNew: noNew,
     };
 });
