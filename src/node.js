@@ -19,6 +19,7 @@ define(function () {
         if (options.hasOwnProperty("color")) {
             this.setColor(options.color);
         }
+        return this;
     };
 
     Node.prototype.setColor = function (color) {
