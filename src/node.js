@@ -1,14 +1,23 @@
 define(function () {
     "use strict";
 
-    var Node = function (x, y, z, options) {
-        this.position = [x, y, z];
+    var Node = function (position, options) {
+        this._position = new THREE.Vector3().fromArray(position);
         this._initOptions();
         this.setOptions(options);
     };
 
     Node.prototype._initOptions = function () {
         this._color = new THREE.Color("white");
+    };
+
+    Node.prototype.setPosition = function (position) {
+        this._position.fromArray(position);
+        return this;
+    };
+
+    Node.prototype.getPosition = function () {
+        return this._position.toArray();
     };
 
     Node.prototype.setOptions = function (options) {
