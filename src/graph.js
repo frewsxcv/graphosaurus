@@ -16,6 +16,10 @@ define(["./frame"], function (Frame) {
         this._nodes[id] = node;
     };
 
+    Graph.prototype.getNode = function (id) {
+        return this._nodes[id];
+    };
+
     Graph.prototype.getNodes = function () {
         var nodes = [];
         for (var id in this._nodes) {
