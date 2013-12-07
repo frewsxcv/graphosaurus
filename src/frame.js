@@ -16,7 +16,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this._initCamera(aspectRatio);
         this._initRenderer(width, height, elem);
         this._initControls();
-        this._initNodes(graph.nodes);
+        this._initNodes(graph.getNodes());
         this._initEdges(graph.edges);
 
         window.addEventListener('resize', function () {

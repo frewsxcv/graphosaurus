@@ -2,12 +2,28 @@ define(["./frame"], function (Frame) {
     "use strict";
 
     var Graph = function () {
-        this.nodes = [];
+        this._nodes = {};
         this.edges = [];
     };
 
     Graph.prototype.addNode = function (node) {
-        this.nodes.push(node);
+        var id = node.getId();
+
+        if (this._nodes.hasOwnProperty(id)) {
+            return;
+        }
+
+        this._nodes[id] = node;
+    };
+
+    Graph.prototype.getNodes = function () {
+        var nodes = [];
+        for (var id in this._nodes) {
+            if (this._nodes.hasOwnProperty(id)) {
+                nodes.push(this._nodes[id]);
+            }
+        }
+        return nodes;
     };
 
     Graph.prototype.addEdge = function (edge) {

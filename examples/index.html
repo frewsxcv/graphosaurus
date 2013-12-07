@@ -29,7 +29,7 @@
 
         // Add nodes
         corey.nodes.forEach(function (node) {
-          var gnode = G.node(node.coords, {color: "green"});
+          var gnode = G.node(node.id, node.coords);
           gnode.addTo(graph);
 
           nodes.push(gnode);

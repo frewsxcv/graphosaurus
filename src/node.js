@@ -1,7 +1,8 @@
 define(function () {
     "use strict";
 
-    var Node = function (pos, opts) {
+    var Node = function (id, pos, opts) {
+        this._id = id;
         this._pos = new THREE.Vector3().fromArray(pos);
         this._initOpts(opts);
     };
@@ -13,6 +14,10 @@ define(function () {
         this._color = new THREE.Color(color);
 
         return this;
+    };
+
+    Node.prototype.getId = function () {
+        return this._id;
     };
 
     Node.prototype.setPos = function (pos) {
