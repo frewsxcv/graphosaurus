@@ -25,7 +25,7 @@ define(function () {
      * @private
      * @method
      *
-     * @param {G.Graph} graph - Graph to retrieve node references from IDs
+     * @param {G.Graph} graph - Graph to retrieve node references from node IDs
      * @returns {undefined}
      */
     Edge.prototype._resolveIds = function (graph) {
