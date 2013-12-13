@@ -1,8 +1,7 @@
 define(function () {
     "use strict";
 
-    var Node = function (id, pos, opts) {
-        this._id = id;
+    var Node = function (pos, opts) {
         this._pos = new THREE.Vector3().fromArray(pos);
         this._initOpts(opts);
     };
@@ -12,6 +11,9 @@ define(function () {
 
         var color = options.hasOwnProperty("color") ? options.color : "white";
         this._color = new THREE.Color(color);
+
+        var id = options.hasOwnProperty("id") ? options.id : null;
+        this._id = id;
 
         return this;
     };
