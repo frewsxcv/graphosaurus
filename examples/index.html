@@ -25,7 +25,6 @@
         G = g;
         graph = G.graph();
         var nodes = []
-        var lookup = {};
 
         // Add nodes
         corey.nodes.forEach(function (node) {
@@ -33,15 +32,12 @@
           gnode.addTo(graph);
 
           nodes.push(gnode);
-          lookup[node.id] = gnode;
         });
 
         // Add edges
         for (var i = 0; i < corey.adjacency.length; i++) {
-          var node1 = nodes[i];
           corey.adjacency[i].forEach(function (other) {
-              var node2 = lookup[other.id];
-              G.edge([node1, node2]).addTo(graph);
+              G.edge([nodes[i], other.id]).addTo(graph);
           });
         }
 
