@@ -20,6 +20,12 @@ define(function () {
         return this;
     };
 
+    /**
+     * Replace string IDs representing nodes with node references
+     * @param {G.Graph} graph - Graph to retrieve node references from IDs
+     * @returns {undefined}
+     * @private
+     */
     Edge.prototype._resolveIds = function (graph) {
         if (typeof this._nodes[0] === "string") {
             this._nodes[0] = graph.getNode(this._nodes[0]);
