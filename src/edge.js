@@ -22,9 +22,11 @@ define(function () {
 
     /**
      * Replace string IDs representing nodes with node references
+     * @private
+     * @method
+     *
      * @param {G.Graph} graph - Graph to retrieve node references from IDs
      * @returns {undefined}
-     * @private
      */
     Edge.prototype._resolveIds = function (graph) {
         if (typeof this._nodes[0] === "string") {
