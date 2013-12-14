@@ -11,6 +11,13 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var width = elem.scrollWidth;
         var height = elem.scrollHeight;
         var aspectRatio = width/height;
+        self.projector = new THREE.Projector();
+
+        //Used for transformations that are part of detecting which node was clickde
+        self.localMatrix = new THREE.Matrix4();
+
+        //Defines how close a click has to be to a node before the nodeClicked event is sent.
+        window.CLICK_THRESHOLD = 0.001;
 
         this._initScene();
         this._initCamera(aspectRatio);
@@ -22,17 +29,79 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         window.addEventListener('resize', function () {
             self.camera.aspect = window.innerWidth / window.innerHeight;
             self.camera.updateProjectionMatrix();
-
             self.renderer.setSize(window.innerWidth, window.innerHeight);
             self.renderer.render(self.scene, self.camera);
         }, false);
 
         this._normalize();
         this._animate();
+
+        // This eventListener detects when the graph is clicked and sends information
+        // about which node was clicked to all relevant listeners
+        window.addEventListener('click', function(event){
+            var clickedParticle = self.getClickedParticle(event.clientX, event.clientY);
+            if(clickedParticle){
+                var event = new CustomEvent('nodeClicked', { 'detail': clickedParticle });
+                document.dispatchEvent(event);
+            }
+        });
+    };
+
+
+    Frame.prototype.getClickedParticle = function(x, y){
+        var clickDirectionVector = this.getClickDirectionVector(event.clientX, event.clientY);
+        return this.intersectParticleSystem(clickDirectionVector.origin, clickDirectionVector.direction);
+    };
+
+    // Determines which node was clicked by finding a node vector that is similar
+    // to the click vector
+    Frame.prototype.intersectParticleSystem = function(origin, direction){
+        this.localMatrix.getInverse(this.particleSystem.matrixWorld);
+        origin.applyMatrix4(this.localMatrix);
+        direction.transformDirection(this.localMatrix).normalize();
+
+        var graphNodes = this.particleSystem.geometry.vertices;
+        for(var i = 0; i < graphNodes.length; ++i){
+            var node = graphNodes[i];
+            var distance = this.distanceFromIntersection(origin, direction, node);
+            if(distance < CLICK_THRESHOLD){
+                return this.nodeStorage[i];
+            }
+        }
+    };
+
+    //This method transforms the click in 2D space into a vector in 3D space
+    Frame.prototype.getClickDirectionVector = function(x, y) {
+        var mouse = new THREE.Vector3((x / window.innerWidth ) * 2 - 1,
+            - (y / window.innerHeight) * 2 + 1,
+            0.5);
+        var vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+        this.projector.unprojectVector(vector, this.camera);
+        var origin = this.camera.position;
+        var localOrigin = origin.clone();
+        var direction = vector.sub(this.camera.position).normalize();
+        var localDirection = direction.clone();
+        return {
+            origin: localOrigin,
+            direction: localDirection
+        };
     };
 
     Frame.prototype._initScene = function () {
         this.scene = new THREE.Scene();
+    };
+
+    //Finds the distance between two vectors
+    Frame.prototype.distanceFromIntersection = function(origin, direction, position){
+        var dot, intersect, distance;
+        var v0 = new THREE.Vector3(), v1 = new THREE.Vector3(), v2 = new THREE.Vector3();
+        v0.subVectors( position, origin );
+        dot = v0.dot( direction );
+
+        intersect = v1.addVectors( origin, v2.copy( direction ).multiplyScalar( dot ) );
+        distance = position.distanceTo( intersect );
+
+        return distance;
     };
 
     Frame.prototype._initCamera = function (aspect) {
@@ -59,6 +128,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var controls = new TrackballControls(this.camera);
 
         controls.addEventListener('change', function () {
+            //console.log('rerendering');
             self.renderer.render(self.scene, self.camera);
         });
 
@@ -66,6 +136,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype._initNodes = function (nodes) {
+        this.nodeStorage = nodes;
         var material = new THREE.ParticleSystemMaterial({
             size: 0.2,
             vertexColors: true,
