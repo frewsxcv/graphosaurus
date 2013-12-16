@@ -67,8 +67,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
 
     Frame.prototype._initNodes = function (nodes) {
         var material = new THREE.ParticleSystemMaterial({
-            size: 4,
-            sizeAttenuation: false,
+            size: 0.2,
             vertexColors: true,
         });
         this.particles = new THREE.Geometry();
