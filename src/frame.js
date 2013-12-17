@@ -8,6 +8,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             elem = document.getElementById(elem);
         }
 
+        this.graph = graph;
+
         var width = elem.scrollWidth;
         var height = elem.scrollHeight;
         var aspectRatio = width/height;
@@ -61,12 +63,13 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         origin.applyMatrix4(this.localMatrix);
         direction.transformDirection(this.localMatrix).normalize();
 
-        var graphNodes = this.particleSystem.geometry.vertices;
-        for(var i = 0; i < graphNodes.length; ++i){
-            var node = graphNodes[i];
+        var geometries = this.particleSystem.geometry.vertices;
+        var nodes = this.graph.getNodes();
+        for(var i = 0; i < geometries.length; ++i){
+            var node = geometries[i];
             var distance = this.distanceFromIntersection(origin, direction, node);
             if (distance < CLICK_THRESHOLD) {
-                return this.nodeStorage[i];
+                return nodes[i];
             }
         }
     };
@@ -136,7 +139,6 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype._initNodes = function (nodes) {
-        this.nodeStorage = nodes;
         var material = new THREE.ParticleSystemMaterial({
             size: 0.2,
             vertexColors: true,
