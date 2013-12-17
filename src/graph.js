@@ -10,7 +10,6 @@ define(["./frame"], function (Frame) {
         //Nothing is done with the clicked node information for now
         document.addEventListener('nodeClicked', function(e){
             console.log(self.getNode(e.detail._id));
-
         });
     };
 
