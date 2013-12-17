@@ -84,14 +84,18 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype._initEdges = function (edges) {
+        var material = new THREE.LineBasicMaterial({
+            vertexColors: true,
+        });
         this.edges = new THREE.Geometry();
         for (var i = 0; i < edges.length; i++) {
             var nodes = edges[i].getNodes();
             this.edges.vertices.push(nodes[0]._pos.clone());
+            this.edges.colors.push(edges[i]._color.clone());
             this.edges.vertices.push(nodes[1]._pos.clone());
+            this.edges.colors.push(edges[i]._color.clone());
         }
-        var edgeMaterial = new THREE.LineBasicMaterial({color: 0x0000ff});
-        this.line = new THREE.Line(this.edges, edgeMaterial, THREE.LinePieces);
+        this.line = new THREE.Line(this.edges, material, THREE.LinePieces);
         this.scene.add(this.line);
     };
 
