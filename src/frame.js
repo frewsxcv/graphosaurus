@@ -129,7 +129,6 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var controls = new TrackballControls(this.camera);
 
         controls.addEventListener('change', function () {
-            //console.log('rerendering');
             self.renderer.render(self.scene, self.camera);
         });
 
