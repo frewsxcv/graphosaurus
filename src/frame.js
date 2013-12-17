@@ -39,24 +39,24 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
 
         // This eventListener detects when the graph is clicked and sends information
         // about which node was clicked to all relevant listeners
-        window.addEventListener('click', function(event){
+        window.addEventListener('click', function (event) {
             var clickedParticle = self.getClickedParticle(event.clientX, event.clientY);
-            if(clickedParticle){
-                var event = new CustomEvent('nodeClicked', { 'detail': clickedParticle });
+            if (clickedParticle) {
+                var event = new CustomEvent('nodeClicked', {'detail': clickedParticle});
                 document.dispatchEvent(event);
             }
         });
     };
 
 
-    Frame.prototype.getClickedParticle = function(x, y){
+    Frame.prototype.getClickedParticle = function (x, y) {
         var clickDirectionVector = this.getClickDirectionVector(event.clientX, event.clientY);
         return this.intersectParticleSystem(clickDirectionVector.origin, clickDirectionVector.direction);
     };
 
     // Determines which node was clicked by finding a node vector that is similar
     // to the click vector
-    Frame.prototype.intersectParticleSystem = function(origin, direction){
+    Frame.prototype.intersectParticleSystem = function (origin, direction) {
         this.localMatrix.getInverse(this.particleSystem.matrixWorld);
         origin.applyMatrix4(this.localMatrix);
         direction.transformDirection(this.localMatrix).normalize();
@@ -65,14 +65,14 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         for(var i = 0; i < graphNodes.length; ++i){
             var node = graphNodes[i];
             var distance = this.distanceFromIntersection(origin, direction, node);
-            if(distance < CLICK_THRESHOLD){
+            if (distance < CLICK_THRESHOLD) {
                 return this.nodeStorage[i];
             }
         }
     };
 
     //This method transforms the click in 2D space into a vector in 3D space
-    Frame.prototype.getClickDirectionVector = function(x, y) {
+    Frame.prototype.getClickDirectionVector = function (x, y) {
         var mouse = new THREE.Vector3((x / window.innerWidth ) * 2 - 1,
             - (y / window.innerHeight) * 2 + 1,
             0.5);
