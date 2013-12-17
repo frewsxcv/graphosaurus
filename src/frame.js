@@ -42,8 +42,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         window.addEventListener('click', function (event) {
             var clickedParticle = self.getClickedParticle(event.clientX, event.clientY);
             if (clickedParticle) {
-                var event = new CustomEvent('nodeClicked', {'detail': clickedParticle});
-                document.dispatchEvent(event);
+                var customEvent = new CustomEvent('nodeClicked', {'detail': clickedParticle});
+                document.dispatchEvent(customEvent);
             }
         });
     };
