@@ -29,11 +29,13 @@ define(function () {
      * @returns {undefined}
      */
     Edge.prototype._resolveIds = function (graph) {
-        if (typeof this._nodes[0] === "string") {
+        var type = typeof this._nodes[0];
+        if (type === "string" || type === "number") {
             this._nodes[0] = graph.getNode(this._nodes[0]);
         }
 
-        if (typeof this._nodes[1] === "string") {
+        type = typeof this._nodes[1];
+        if (type === "string" || type === "number") {
             this._nodes[1] = graph.getNode(this._nodes[1]);
         }
     };
