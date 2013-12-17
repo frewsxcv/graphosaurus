@@ -50,7 +50,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
 
 
     Frame.prototype.getClickedParticle = function (x, y) {
-        var clickDirectionVector = this.getClickDirectionVector(event.clientX, event.clientY);
+        var clickDirectionVector = this.getClickDirectionVector(x, y);
         return this.intersectParticleSystem(clickDirectionVector.origin, clickDirectionVector.direction);
     };
 
