@@ -29,6 +29,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         window.addEventListener('resize', function () {
             self.camera.aspect = window.innerWidth / window.innerHeight;
             self.camera.updateProjectionMatrix();
+
             self.renderer.setSize(window.innerWidth, window.innerHeight);
             self.renderer.render(self.scene, self.camera);
         }, false);
