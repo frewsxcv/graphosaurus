@@ -88,10 +88,6 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         };
     };
 
-    Frame.prototype._initScene = function () {
-        this.scene = new THREE.Scene();
-    };
-
     //Finds the distance between two vectors
     Frame.prototype.distanceFromIntersection = function(origin, direction, position){
         var dot, intersect, distance;
@@ -103,6 +99,10 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         distance = position.distanceTo( intersect );
 
         return distance;
+    };
+
+    Frame.prototype._initScene = function () {
+        this.scene = new THREE.Scene();
     };
 
     Frame.prototype._initCamera = function (aspect) {
