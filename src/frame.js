@@ -66,8 +66,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var geometries = this.particleSystem.geometry.vertices;
         var nodes = this.graph.getNodes();
         for(var i = 0; i < geometries.length; ++i){
-            var node = geometries[i];
-            var distance = this.distanceFromIntersection(origin, direction, node);
+            var geometry = geometries[i];
+            var distance = this.distanceFromIntersection(origin, direction, geometry);
             if (distance < CLICK_THRESHOLD) {
                 return nodes[i];
             }
