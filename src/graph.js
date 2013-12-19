@@ -32,9 +32,31 @@ define(["./frame"], function (Frame) {
     };
 
     Graph.prototype.addEdge = function (edge) {
-        this.edges.push(edge);
+        this._resolveEdgeIds(edge);
+        this._edges.push(edge);
 
         return this;
+    };
+
+    /**
+     * Replace string IDs representing Nodes in Edges with Node references
+     * @private
+     *
+     * @param {Edge} edge - Edge that
+     * @returns {undefined}
+     */
+    Graph.prototype._resolveEdgeIds = function (edge) {
+        var nodes = edge.getNodes(), type;
+
+        type = typeof nodes[0];
+        if (type === "string" || type === "number") {
+            nodes[0] = this.getNode(nodes[0]);
+        }
+
+        type = typeof nodes[1];
+        if (type === "string" || type === "number") {
+            nodes[1] = this.getNode(nodes[1]);
+        }
     };
 
     Graph.prototype.renderIn = function (elem) {
