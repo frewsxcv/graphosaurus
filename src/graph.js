@@ -15,6 +15,8 @@ define(["./frame"], function (Frame) {
         }
 
         this._nodes.push(node);
+
+        return this;
     };
 
     Graph.prototype.getNode = function (id) {
@@ -27,6 +29,8 @@ define(["./frame"], function (Frame) {
 
     Graph.prototype.addEdge = function (edge) {
         this.edges.push(edge);
+
+        return this;
     };
 
     Graph.prototype.renderIn = function (elem) {
