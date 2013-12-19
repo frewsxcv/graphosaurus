@@ -4,7 +4,7 @@ define(["./frame"], function (Frame) {
     var Graph = function () {
         this._nodeIds = {};
         this._nodes = [];
-        this.edges = [];
+        this._edges = [];
     };
 
     Graph.prototype.addNode = function (node) {
@@ -25,6 +25,10 @@ define(["./frame"], function (Frame) {
 
     Graph.prototype.getNodes = function () {
         return this._nodes;
+    };
+
+    Graph.prototype.getEdges = function () {
+        return this._edges;
     };
 
     Graph.prototype.addEdge = function (edge) {
