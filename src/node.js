@@ -1,11 +1,27 @@
 define(function () {
     "use strict";
 
+    /**
+     * Constructs a new Node
+     * @constructor
+     * @alias Node
+     *
+     * @param {Array} nodes - Position
+     * @param {Object} opts - Options
+     * TODO: document opts
+     */
     var Node = function (pos, opts) {
         this._pos = new THREE.Vector3().fromArray(pos);
         this._initOpts(opts);
     };
 
+    /**
+     * Initialize Node options
+     * @private
+     *
+     * @param {Object} options - Options passed in from the constructor
+     * @returns {Node} The Node the method was called on
+     */
     Node.prototype._initOpts = function (options) {
         options = options || {};
 
@@ -18,6 +34,11 @@ define(function () {
         return this;
     };
 
+    /**
+     * Get the ID of the Node
+     *
+     * @returns {String|Number|null} ID of the Node
+     */
     Node.prototype.getId = function () {
         return this._id;
     };
