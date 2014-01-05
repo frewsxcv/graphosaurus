@@ -6,8 +6,9 @@ define(function () {
      * @constructor
      * @alias Edge
      *
-     * @param {Array} nodes - Nodes
-     * @param {Object} opts - Options
+     * @param {Array} nodes - Array of two [Nodes]{@link module:Node}
+     * @param {Object} opts - Object containing optional properties of the Edge
+     * @param {Number|String} opts.color - Hexadecimal or CSS-style string representation of a color; defaults to 'white'
      */
     var Edge = function (nodes, opts) {
         this.setNodes(nodes);
@@ -44,8 +45,7 @@ define(function () {
     /**
      * Get the nodes of the Edge
      *
-     * @returns {Array} Array of two G.Nodes that represent the ends of the
-     *     Edge
+     * @returns {Array} Array of two Nodes that represent the ends of the Edge
      */
     Edge.prototype.getNodes = function () {
         // TODO: should this do this._nodes.clone(); ?
@@ -88,8 +88,7 @@ define(function () {
     };
 
     /**
-     * Add the Edge to a Graph
-     * ADD NOTE ABOUT EDGE IDS BEING RESOLVED
+     * Add the Edge to a Graph. Upon adding, if the Edge contains Node string ID's, they will be looked up in the Graph and replaced with Node instances.
      *
      * @param {Graph} graph - Graph the Edge will be added to
      * @returns {Edge} The Edge the method was called on
