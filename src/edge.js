@@ -6,7 +6,7 @@ define(function () {
      * @constructor
      * @alias Edge
      *
-     * @param {Array} nodes - Array of two [Nodes]{@link module:Node}
+     * @param {Array} nodes - Array of two Nodes representing a graph edge. Since an Edge is undirected, the order of the Nodes in the Array does not matter.
      * @param {Object} opts - Object containing optional properties of the Edge
      * @param {Number|String} opts.color - Hexadecimal or CSS-style string representation of a color; defaults to 'white'
      */
@@ -34,7 +34,7 @@ define(function () {
     /**
      * Set the nodes of the Edge
      *
-     * @param {Array} nodes - Array of two [Nodes]{@link module:Node}
+     * @param {Array} nodes - Array of two Nodes
      * @returns {Edge} The Edge the method was called on
      */
     Edge.prototype.setNodes = function (nodes) {
