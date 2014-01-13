@@ -1,0 +1,22 @@
+{
+  "name": "graphosaurus",
+  "version": "0.1.0",
+  "description": "A three-dimensional static graph viewer.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/frewsxcv/graphosaurus.git"
+  },
+  "author": "",
+  "license": "MPL version 2",
+  "bugs": {
+    "url": "https://github.com/frewsxcv/graphosaurus/issues"
+  },
+  "homepage": "https://github.com/frewsxcv/graphosaurus",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-jsdoc": "~0.5.1",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-requirejs": "~0.4.1"
+  }
+}
