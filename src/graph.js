@@ -31,6 +31,9 @@ define(["./frame"], function (Frame) {
         return this._edges;
     };
 
+    /**
+     * Add an Edge to the Graph. Upon adding, if the Edge contains Node string ID's, they will be looked up in the Graph and replaced with Node instances.
+     */
     Graph.prototype.addEdge = function (edge) {
         this._resolveEdgeIds(edge);
         this._edges.push(edge);

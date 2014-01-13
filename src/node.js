@@ -1,11 +1,28 @@
 define(function () {
     "use strict";
 
+    /**
+     * Constructs a new Node
+     * @constructor
+     * @alias Node
+     *
+     * @param {Array} pos - Array of three Numbers representing the position of the Node in 3D space (x, y, z)
+     * @param {Object} opts - Object containing optional properties of the Node
+     * @param {Number|String|null} opts.id - Optional unique identifier; Numbers will be converted into Strings; defaults to null
+     * @param {Number|String} opts.color - Hexadecimal or CSS-style string representation of a color; defaults to 'white'
+     */
     var Node = function (pos, opts) {
         this._pos = new THREE.Vector3().fromArray(pos);
         this._initOpts(opts);
     };
 
+    /**
+     * Initialize Node options
+     * @private
+     *
+     * @param {Object} options - Options passed in from the constructor
+     * @returns {Node} The Node the method was called on
+     */
     Node.prototype._initOpts = function (options) {
         options = options || {};
 
@@ -18,19 +35,42 @@ define(function () {
         return this;
     };
 
+    /**
+     * Get the ID of the Node
+     *
+     * @returns {String|Number|null} ID of the Node
+     */
     Node.prototype.getId = function () {
         return this._id;
     };
 
+    /**
+     * Set the position of the Node
+     *
+     * @param pos
+     * @param {Array} nodes - Array of three Numbers representing the position of the Node in 3D space (x, y, z)
+     * @returns {Node} The Node the method was called on
+     */
     Node.prototype.setPos = function (pos) {
         this._pos.fromArray(pos);
         return this;
     };
 
+    /**
+     * Get the position of the Node
+     *
+     * @returns {Array} Array of three Numbers representing the position of the Node in 3D space (x, y, z)
+     */
     Node.prototype.getPos = function () {
         return this._pos.toArray();
     };
 
+    /**
+     * Set the color of the Node
+     *
+     * @param {Number|String} color - Hexadecimal or CSS-style string representation of a color
+     * @returns The Node the method was called
+     */
     Node.prototype.setColor = function (color) {
         if (color) {
             this._color.set(color);
@@ -38,10 +78,21 @@ define(function () {
         return this;
     };
 
+    /**
+     * Get the color of the Node
+     *
+     * @returns {String} String hexadecimal representation of the Edge's color
+     */
     Node.prototype.getColor = function () {
         return this._color.getHexString();
     };
 
+    /**
+     * Add the Node to a Graph
+     *
+     * @param {Graph} graph - Graph the Node will be added to
+     * @returns {Node} The Node the method was called on
+     */
     Node.prototype.addTo = function (graph) {
         graph.addNode(this);
         return this;
