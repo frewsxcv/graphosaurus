@@ -12,7 +12,7 @@ define(function () {
      */
     var Edge = function (nodes, props) {
         this.setNodes(nodes);
-        this._initOpts(props);
+        this._initProps(props);
     };
 
     /**
