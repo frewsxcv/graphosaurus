@@ -7,25 +7,25 @@ define(function () {
      * @alias Edge
      *
      * @param {Array} nodes - Array of two Nodes representing a graph edge. Since an Edge is undirected, the order of the Nodes in the Array does not matter.
-     * @param {Object} opts - Object containing optional properties of the Edge
-     * @param {Number|String} opts.color - Hexadecimal or CSS-style string representation of a color; defaults to 'white'
+     * @param {Object} props - Object containing optional properties of the Edge
+     * @param {Number|String} props.color - Hexadecimal or CSS-style string representation of a color; defaults to 'white'
      */
-    var Edge = function (nodes, opts) {
+    var Edge = function (nodes, props) {
         this.setNodes(nodes);
-        this._initOpts(opts);
+        this._initOpts(props);
     };
 
     /**
-     * Initialize Edge options
+     * Initialize Edge properties
      * @private
      *
-     * @param {Object} options - Options passed in from the constructor
+     * @param {Object} properties - Properties passed in from the constructor
      * @returns {Edge} The Edge the method was called on
      */
-    Edge.prototype._initOpts = function (options) {
-        options = options || {};
+    Edge.prototype._initProps = function (properties) {
+        properties = properties || {};
 
-        var color = options.hasOwnProperty("color") ? options.color : "white";
+        var color = properties.hasOwnProperty("color") ? properties.color : "white";
         this._color = new THREE.Color(color);
 
         return this;

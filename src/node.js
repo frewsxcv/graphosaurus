@@ -7,29 +7,29 @@ define(function () {
      * @alias Node
      *
      * @param {Array} pos - Array of three Numbers representing the position of the Node in 3D space (x, y, z)
-     * @param {Object} opts - Object containing optional properties of the Node
-     * @param {Number|String|null} opts.id - Optional unique identifier; Numbers will be converted into Strings; defaults to null
-     * @param {Number|String} opts.color - Hexadecimal or CSS-style string representation of a color; defaults to 'white'
+     * @param {Object} props - Object containing optional properties of the Node
+     * @param {Number|String|null} props.id - Optional unique identifier; Numbers will be converted into Strings; defaults to null
+     * @param {Number|String} props.color - Hexadecimal or CSS-style string representation of a color; defaults to 'white'
      */
-    var Node = function (pos, opts) {
+    var Node = function (pos, props) {
         this._pos = new THREE.Vector3().fromArray(pos);
-        this._initOpts(opts);
+        this._initProps(props);
     };
 
     /**
-     * Initialize Node options
+     * Initialize Node properties
      * @private
      *
-     * @param {Object} options - Options passed in from the constructor
+     * @param {Object} properties - Options passed in from the constructor
      * @returns {Node} The Node the method was called on
      */
-    Node.prototype._initOpts = function (options) {
-        options = options || {};
+    Node.prototype._initProps = function (properties) {
+        properties = properties || {};
 
-        var color = options.hasOwnProperty("color") ? options.color : "white";
+        var color = properties.hasOwnProperty("color") ? properties.color : "white";
         this._color = new THREE.Color(color);
 
-        var id = options.hasOwnProperty("id") ? options.id : null;
+        var id = properties.hasOwnProperty("id") ? properties.id : null;
         this._id = id;
 
         return this;
