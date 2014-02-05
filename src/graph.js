@@ -2,9 +2,15 @@ define(["./frame"], function (Frame) {
     "use strict";
 
     var Graph = function () {
+        var self = this;
         this._nodeIds = {};
         this._nodes = [];
         this._edges = [];
+
+        //Nothing is done with the clicked node information for now
+        document.addEventListener('nodeClicked', function(e){
+            console.log(self.getNode(e.detail._id));
+        });
     };
 
     Graph.prototype.addNode = function (node) {
