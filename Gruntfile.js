@@ -36,7 +36,20 @@ module.exports = function (grunt) {
             }
         },
         requirejs: {
-            compile: {
+            compileWithoutThree: {
+                options: {
+                    baseUrl: ".",
+                    name: "build/almond/almond",
+                    include: ["src/graphosaurus"],
+                    out: "dist/graphosaurus.no-three.min.js",
+                    preserveLicenseComments: false,
+                    wrap: {
+                        startFile: "build/start.frag.js",
+                        endFile: "build/end.frag.js",
+                    }
+                }
+            },
+            compileWithThree: {
                 options: {
                     baseUrl: ".",
                     name: "build/almond/almond",
@@ -44,7 +57,7 @@ module.exports = function (grunt) {
                     out: "dist/graphosaurus.min.js",
                     preserveLicenseComments: false,
                     wrap: {
-                        startFile: "build/start.frag.js",
+                        startFile: ["build/start.frag.js", "build/three-r66.min.js"],
                         endFile: "build/end.frag.js",
                     }
                 }
