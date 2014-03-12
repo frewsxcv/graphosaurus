@@ -1,0 +1,71 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Graphosaurus demo: Eve Online Map</title>
+  <style>
+    #frame {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="frame"></div>
+
+<script src="/dist/graphosaurus.min.js"></script>
+<script src="eve-data.js"></script>
+<script>
+var securityColor = function (security) {
+  var color;
+  security = Math.floor(security * 10 / 2);
+
+  switch (security) {
+    case -5: color = 0xf00000; break;
+    case -4: color = 0xd73000; break;
+    case -3: color = 0xf04800; break;
+    case -2: color = 0xf06000; break;
+    case -1: color = 0xd77700; break;
+    case -0: color = 0xefef00; break;
+    case  1: color = 0x8fef2f; break;
+    case  2: color = 0x00f000; break;
+    case  3: color = 0x00ef47; break;
+    case  4: color = 0x48f0c0; break;
+    case  5: color = 0x2fefef; break;
+    default: color = 0xffffff;
+  }
+
+  return color;
+};
+
+graph = G.graph({
+  sizeAttenuation: false,
+  nodeImage: "http://threejs.org/examples/textures/sprites/disc.png",
+  antialiasing: true,
+});
+
+for (var i = 0; i < eve.systems.length; i++) {
+  var system = eve.systems[i];
+  var systemId = system[0];
+  var coords = system.slice(1,4);
+  var security = system[4];
+
+  G.node(coords, {
+    id: systemId,
+    color: securityColor(security),
+  }).addTo(graph);
+}
+
+for (var i = 0; i < eve.relations.length; i++) {
+  G.edge(eve.relations[i], {
+    color: 0x0000aa,
+  }).addTo(graph);
+}
+
+graph.renderIn('frame');
+</script>
+</body>
+</html>
