@@ -8,6 +8,7 @@ define(["./frame"], function (Frame) {
      *
      * @param {Object} props - Object containing optional properties of the Graph
      * @param {Boolean} antialiasing - 'true' if antialiasing should be enabled on the graph. Defaults to 'false'.
+     * @param {Boolean} sizeAttenuation - 'true' if particles' size should get smaller with distance. Defaults to 'false'.
      */
     var Graph = function (props) {
         this._nodeIds = {};
@@ -21,6 +22,9 @@ define(["./frame"], function (Frame) {
 
         this._antialias = properties.hasOwnProperty("antialias") ?
             !!properties.antialias : false;
+
+        this._sizeAttenuation = properties.hasOwnProperty("sizeAttenuation") ?
+            !!properties.sizeAttenuation : false;
 
         return this;
     };
