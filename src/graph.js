@@ -7,7 +7,7 @@ define(["./frame"], function (Frame) {
      * @alias Graph
      *
      * @param {Object} props - Object containing optional properties of the Graph
-     * @param {Boolean} antialiasing - 'true' if antialiasing should be enabled on the graph. Defaults to 'false'.
+     * @param {Boolean} antialias - 'true' if antialiasing should be enabled on the graph. Defaults to 'false'.
      * @param {Boolean} sizeAttenuation - 'true' if particles' size should get smaller with distance. Defaults to 'false'.
      */
     var Graph = function (props) {
