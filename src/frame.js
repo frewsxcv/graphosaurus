@@ -8,6 +8,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             elem = document.getElementById(elem);
         }
 
+        this.graph = graph;
+
         var width = elem.scrollWidth;
         var height = elem.scrollHeight;
         var aspectRatio = width/height;
@@ -47,7 +49,9 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype._initRenderer = function (width, height, elem) {
-        var renderer = new THREE.WebGLRenderer();
+        var renderer = new THREE.WebGLRenderer({
+            antialias: this.graph._antialias,
+        });
         renderer.setSize(width, height);
         elem.appendChild(renderer.domElement);
 
