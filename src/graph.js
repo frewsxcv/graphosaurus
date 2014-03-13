@@ -1,10 +1,28 @@
 define(["./frame"], function (Frame) {
     "use strict";
 
-    var Graph = function () {
+    /**
+     * Constructs a new Graph
+     * @constructor
+     * @alias Graph
+     *
+     * @param {Object} props - Object containing optional properties of the Graph
+     * @param {Boolean} antialiasing - 'true' if antialiasing should be enabled on the graph. Defaults to 'false'.
+     */
+    var Graph = function (props) {
         this._nodeIds = {};
         this._nodes = [];
         this._edges = [];
+        this._initProps(props);
+    };
+
+    Graph.prototype._initProps = function (properties) {
+        properties = properties || {};
+
+        this._antialias = properties.hasOwnProperty("antialias") ?
+            !!properties.antialias : false;
+
+        return this;
     };
 
     Graph.prototype.addNode = function (node) {
