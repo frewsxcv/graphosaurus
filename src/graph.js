@@ -9,6 +9,8 @@ define(["./frame"], function (Frame) {
      * @param {Object} props - Object containing optional properties of the Graph
      * @param {Boolean} props.antialias - 'true' if antialiasing should be enabled on the graph. Defaults to 'false'.
      * @param {Boolean} props.sizeAttenuation - 'true' if nodes' size should change with distance. Defaults to 'false'.
+     * @param {String} props.nodeImage - Path to an image to use for the graph nodes, defaults to no image.
+     * @param {Boolean} props.nodeImageTransparent - 'true' if the node image has transparency, defaults to 'false'.
      */
     var Graph = function (props) {
         this._nodeIds = {};
@@ -25,6 +27,13 @@ define(["./frame"], function (Frame) {
 
         this._sizeAttenuation = properties.hasOwnProperty("sizeAttenuation") ?
             !!properties.sizeAttenuation : false;
+
+        this._nodeImage = properties.hasOwnProperty("nodeImage") ?
+            properties.nodeImage : undefined;
+
+        this._nodeImageTransparent =
+            properties.hasOwnProperty("nodeImageTransparent") ?
+            !!properties.nodeImageTransparent : false;
 
         return this;
     };

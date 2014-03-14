@@ -75,6 +75,13 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             vertexColors: true,
             sizeAttenuation: this.graph._sizeAttenuation,
         });
+
+        if (this.graph._nodeImage !== undefined) {
+            var texture = THREE.ImageUtils.loadTexture(this.graph._nodeImage);
+            texture.needsUpdate = true;  // TODO: this shouldn't be necessary since loadTexture already includes this?
+            material.map = texture;
+        }
+
         this.particles = new THREE.Geometry();
         for (var i = 0; i < nodes.length; i++) {
             var node = nodes[i];
@@ -84,7 +91,14 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             this.particles.vertices.push(vertex);
             this.particles.colors.push(color);
         }
+
         this.particleSystem = new THREE.ParticleSystem(this.particles, material);
+
+        if (this.graph._nodeImageTransparent === true) {
+            material.transparent = true;
+            this.particleSystem.sortParticles = true;
+        }
+
         this.scene.add(this.particleSystem);
     };
 
