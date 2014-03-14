@@ -25,7 +25,7 @@ define(function () {
     Edge.prototype._initProps = function (properties) {
         properties = properties || {};
 
-        var color = properties.hasOwnProperty("color") ? properties.color : "white";
+        var color = properties.color || "white";
         this._color = new THREE.Color(color);
 
         return this;

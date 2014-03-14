@@ -22,18 +22,13 @@ define(["./frame"], function (Frame) {
     Graph.prototype._initProps = function (properties) {
         properties = properties || {};
 
-        this._antialias = properties.hasOwnProperty("antialias") ?
-            !!properties.antialias : false;
+        this._antialias = !!properties.antialias;
 
-        this._sizeAttenuation = properties.hasOwnProperty("sizeAttenuation") ?
-            !!properties.sizeAttenuation : false;
+        this._sizeAttenuation = !!properties.sizeAttenuation;
 
-        this._nodeImage = properties.hasOwnProperty("nodeImage") ?
-            properties.nodeImage : undefined;
+        this._nodeImage = properties.nodeImage || undefined;
 
-        this._nodeImageTransparent =
-            properties.hasOwnProperty("nodeImageTransparent") ?
-            !!properties.nodeImageTransparent : false;
+        this._nodeImageTransparent = !!properties.nodeImageTransparent;
 
         return this;
     };

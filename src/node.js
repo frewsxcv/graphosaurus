@@ -26,10 +26,10 @@ define(function () {
     Node.prototype._initProps = function (properties) {
         properties = properties || {};
 
-        var color = properties.hasOwnProperty("color") ? properties.color : "white";
+        var color = properties.color || "white";
         this._color = new THREE.Color(color);
 
-        var id = properties.hasOwnProperty("id") ? properties.id : null;
+        var id = properties.id || null;
         this._id = id;
 
         return this;
