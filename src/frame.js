@@ -107,6 +107,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     Frame.prototype._initEdges = function (edges) {
         var material = new THREE.LineBasicMaterial({
             vertexColors: true,
+            linewidth: this.graph._edgeWidth,
         });
         this.edges = new THREE.Geometry();
         for (var i = 0; i < edges.length; i++) {
