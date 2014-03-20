@@ -72,6 +72,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype._initNodes = function (nodes) {
+        var self = this;
+
         var material = new THREE.ParticleSystemMaterial({
             size: 10.0,
             vertexColors: true,
@@ -79,8 +81,12 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         });
 
         if (this.graph._nodeImage !== undefined) {
-            var texture = THREE.ImageUtils.loadTexture(this.graph._nodeImage);
-            texture.needsUpdate = true;  // TODO: this shouldn't be necessary since loadTexture already includes this?
+            var texture = THREE.ImageUtils.loadTexture(
+                this.graph._nodeImage, undefined, function () {
+                    // Force a rerender after node images have been loaded
+                    self.renderer.render(self.scene, self.camera);
+                }
+            );
             material.map = texture;
         }
 
