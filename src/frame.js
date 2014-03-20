@@ -51,7 +51,9 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     Frame.prototype._initRenderer = function (width, height, elem) {
         var renderer = new THREE.WebGLRenderer({
             antialias: this.graph._antialias,
+            alpha: true,
         });
+        renderer.setClearColor(this.graph._bgColor, this.graph._bgOpacity);
         renderer.setSize(width, height);
         elem.appendChild(renderer.domElement);
 
