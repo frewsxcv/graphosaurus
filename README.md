@@ -4,7 +4,11 @@ A three-dimensional static graph viewer.
 
 ## Build
 
-To build the minified version of Graphosaurus, run `./build.sh`. A new file `graphosaurus.min.js` will be outputted in the `dist/` directory.
+1. Install [node](http://nodejs.org/), [npm](https://www.npmjs.org/), and [grunt-cli](https://www.npmjs.org/package/grunt-cli)
+2. Clone the graphosaurus repository
+3. Run `git submodule update --init` to download [almond](https://github.com/jrburke/almond)
+4. Run `npm install` to install all the build requirements
+4. Run `grunt compile` to build graphosaurus to `dist/`
 
 ## Third party libraries
 
