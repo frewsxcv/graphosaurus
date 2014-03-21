@@ -60,12 +60,16 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.renderer = renderer;
     };
 
+    Frame.prototype.forceRerender = function () {
+        this.renderer.render(this.scene, this.camera);
+    };
+
     Frame.prototype._initControls = function () {
         var self = this;
         var controls = new TrackballControls(this.camera);
 
         controls.addEventListener('change', function () {
-            self.renderer.render(self.scene, self.camera);
+            self.forceRerender();
         });
 
         this.controls = controls;
@@ -84,9 +88,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             var texture = THREE.ImageUtils.loadTexture(
                 this.graph._nodeImage, undefined, function () {
                     // Force a rerender after node images have been loaded
-                    self.renderer.render(self.scene, self.camera);
-                }
-            );
+                    self.forceRerender();
+                });
             material.map = texture;
         }
 
