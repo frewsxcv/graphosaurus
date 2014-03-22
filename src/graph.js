@@ -11,6 +11,7 @@ define(["./frame"], function (Frame) {
      * @param {Boolean} props.sizeAttenuation - 'true' if nodes' size should change with distance. Defaults to 'false'.
      * @param {String} props.nodeImage - Path to an image to use for the graph nodes, defaults to no image.
      * @param {Boolean} props.nodeImageTransparent - 'true' if the node image has transparency, defaults to 'false'.
+     * @param {Number} props.nodeSize - Number representing the size of the nodes within the graph
      * @param {Number} props.edgeWidth - Number representing the width of the edges within the graph
      * @param {Number|String} props.bgColor - Hexadecimal or CSS-style string representation the color of the background
      * @param {Number} props.bgOpacity - Number (between 0 and 1) indicating the opacity of the background
@@ -32,6 +33,8 @@ define(["./frame"], function (Frame) {
         this._nodeImage = properties.nodeImage || undefined;
 
         this._nodeImageTransparent = !!properties.nodeImageTransparent;
+
+        this._nodeSize = properties.nodeSize !== undefined ? properties.nodeSize : 10;
 
         this._bgColor = properties.bgColor || "white";
 
