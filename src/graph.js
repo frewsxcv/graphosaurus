@@ -13,8 +13,8 @@ define(["./frame"], function (Frame) {
      * @param {Boolean} props.nodeImageTransparent - 'true' if the node image has transparency, defaults to 'false'.
      * @param {Number} props.nodeSize - Number representing the size (in pixels) of the nodes within the graph, defaults to 10
      * @param {Number} props.edgeWidth - Number representing the width (in pixels) of the edges within the graph, defaults to 1
-     * @param {Number|String} props.bgColor - Hexadecimal or CSS-style string representation the color of the background
-     * @param {Number} props.bgOpacity - Number (between 0 and 1) indicating the opacity of the background
+     * @param {Number|String} props.bgColor - Hexadecimal or CSS-style string representation the color of the background, defaults to 'white'
+     * @param {Number} props.bgOpacity - Number (between 0 and 1) indicating the percentage opacity of the background, defaults to 1 (100%)
      */
     var Graph = function (props) {
         this._nodeIds = {};
