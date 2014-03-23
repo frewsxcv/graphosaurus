@@ -26,7 +26,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             self.camera.updateProjectionMatrix();
 
             self.renderer.setSize(window.innerWidth, window.innerHeight);
-            self.renderer.render(self.scene, self.camera);
+            self.forceRerender();
         }, false);
 
         this._normalize();
