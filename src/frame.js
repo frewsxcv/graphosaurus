@@ -87,7 +87,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         if (this.graph._nodeImage !== undefined) {
             var texture = THREE.ImageUtils.loadTexture(
                 this.graph._nodeImage, undefined, function () {
-                    // Force a rerender after node images have been loaded
+                    // Force a rerender after node image has finished loading
                     self.forceRerender();
                 });
             material.map = texture;
