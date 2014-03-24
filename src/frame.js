@@ -17,7 +17,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this._initScene();
         this._initCamera(aspectRatio);
         this._initRenderer(width, height, elem);
-        this._initControls();
+        this._initControls(elem);
         this._initNodes(graph.getNodes());
         this._initEdges(graph.getEdges());
 
@@ -64,9 +64,9 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.renderer.render(this.scene, this.camera);
     };
 
-    Frame.prototype._initControls = function () {
+    Frame.prototype._initControls = function (elem) {
         var self = this;
-        var controls = new TrackballControls(this.camera);
+        var controls = new TrackballControls(this.camera, elem);
 
         controls.addEventListener('change', function () {
             self.forceRerender();
