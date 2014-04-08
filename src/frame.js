@@ -29,7 +29,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             self.forceRerender();
         }, false);
 
-        this._normalize();
+        this.positionCamera();
         this._animate();
     };
 
@@ -40,10 +40,9 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     Frame.prototype._initCamera = function (aspect) {
         var viewAngle = 45;
         var near = 0.1;
-        var far = 10000;
+        var far = 99999999999999;
 
         var camera = new THREE.PerspectiveCamera(viewAngle, aspect, near, far);
-        camera.position.z = 15;
 
         this.camera = camera;
     };
@@ -73,6 +72,22 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         });
 
         this.controls = controls;
+    };
+
+    Frame.prototype.positionCamera = function () {
+        // Calculate optimal camera position
+        this.particles.computeBoundingSphere();
+        var sphere = this.particles.boundingSphere;
+
+        // TODO: allow the user to specify a custom FOV
+        var fov = 45;
+
+        var optimalDistance = sphere.radius / Math.tan(fov / 2);
+
+        this.camera.position = sphere.center.clone();
+        this.camera.position.x += optimalDistance;
+
+        this.controls.target = sphere.center.clone();
     };
 
     Frame.prototype._initNodes = function (nodes) {
@@ -128,26 +143,6 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         }
         this.line = new THREE.Line(this.edges, material, THREE.LinePieces);
         this.scene.add(this.line);
-    };
-
-    Frame.prototype._normalize = function () {
-        // Calculate bounding sphere
-        this.particles.computeBoundingSphere();
-        var sphere = this.particles.boundingSphere;
-        var center = [-sphere.center.x, -sphere.center.y, -sphere.center.z];
-
-        // Create/apply translation transformation matrix
-        var translation = new THREE.Matrix4();
-        translation.makeTranslation.apply(translation, center);
-        this.particles.applyMatrix(translation);
-        this.edges.applyMatrix(translation);
-
-        // Determine scale to normalize coordinates
-        var scale = 5 / sphere.radius;
-
-        // Scale coordinates
-        this.particleSystem.scale.set(scale, scale, scale);
-        this.line.scale.set(scale, scale, scale);
     };
 
     Frame.prototype._animate = function () {
