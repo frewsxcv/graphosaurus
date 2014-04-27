@@ -2,8 +2,6 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     "use strict";
 
     var Frame = function (elem, graph) {
-        var self = this;
-
         if (typeof elem === 'string') {
             elem = document.getElementById(elem);
         }
@@ -15,21 +13,15 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var aspectRatio = width/height;
 
         this._initScene();
-        this._initCamera(aspectRatio);
         this._initRenderer(width, height, elem);
-        this._initControls(elem);
         this._initNodes(graph.getNodes());
         this._initEdges(graph.getEdges());
 
-        window.addEventListener('resize', function () {
-            self.camera.aspect = window.innerWidth / window.innerHeight;
-            self.camera.updateProjectionMatrix();
-
-            self.renderer.setSize(window.innerWidth, window.innerHeight);
-            self.forceRerender();
-        }, false);
+        this._initCamera(aspectRatio);
+        this._initControls(elem);
 
         this.positionCamera();
+
         this._animate();
     };
 
@@ -38,13 +30,21 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype._initCamera = function (aspect) {
-        var viewAngle = 45;
-        var near = 0.1;
-        var far = 99999999999999;
+        var self = this;
 
-        var camera = new THREE.PerspectiveCamera(viewAngle, aspect, near, far);
+        var viewAngle = 45;
+        var camera = new THREE.PerspectiveCamera(viewAngle, aspect);
 
         this.camera = camera;
+
+        window.addEventListener('resize', function () {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            // TODO this should be the element width/height, not the window
+            self.renderer.setSize(window.innerWidth, window.innerHeight);
+            self.forceRerender();
+        }, false);
     };
 
     Frame.prototype._initRenderer = function (width, height, elem) {
@@ -146,9 +146,27 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype._animate = function () {
-        var self = this;
+        var self = this,
+            prevCameraPos;
 
+        // Update near/far camera range
         (function animate() {
+
+            // TODO: this shouldn't update every frame
+            var cameraPos = self.camera.position;
+            if (cameraPos !== prevCameraPos) {
+                var boundingSphere = self.particles.boundingSphere;
+                var distance = boundingSphere.distanceToPoint(cameraPos);
+
+                if (distance > 0) {
+                    self.camera.near = distance;
+                    self.camera.far = distance + boundingSphere.radius * 2;
+                    self.camera.updateProjectionMatrix();
+                }
+
+                prevCameraPos = cameraPos.clone();
+            }
+
             window.requestAnimationFrame(animate);
             self.controls.update();
         }());
