@@ -2,8 +2,6 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     "use strict";
 
     var Frame = function (elem, graph) {
-        var self = this;
-
         if (typeof elem === 'string') {
             elem = document.getElementById(elem);
         }
@@ -15,21 +13,15 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var aspectRatio = width/height;
 
         this._initScene();
-        this._initCamera(aspectRatio);
         this._initRenderer(width, height, elem);
-        this._initControls(elem);
         this._initNodes(graph.getNodes());
         this._initEdges(graph.getEdges());
 
-        window.addEventListener('resize', function () {
-            self.camera.aspect = window.innerWidth / window.innerHeight;
-            self.camera.updateProjectionMatrix();
+        this._initCamera(aspectRatio);
+        this._initControls(elem);
 
-            self.renderer.setSize(window.innerWidth, window.innerHeight);
-            self.forceRerender();
-        }, false);
+        this.positionCamera();
 
-        this._normalize();
         this._animate();
     };
 
@@ -38,14 +30,21 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     Frame.prototype._initCamera = function (aspect) {
-        var viewAngle = 45;
-        var near = 0.1;
-        var far = 10000;
+        var self = this;
 
-        var camera = new THREE.PerspectiveCamera(viewAngle, aspect, near, far);
-        camera.position.z = 15;
+        var viewAngle = 45;
+        var camera = new THREE.PerspectiveCamera(viewAngle, aspect);
 
         this.camera = camera;
+
+        window.addEventListener('resize', function () {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            // TODO this should be the element width/height, not the window
+            self.renderer.setSize(window.innerWidth, window.innerHeight);
+            self.forceRerender();
+        }, false);
     };
 
     Frame.prototype._initRenderer = function (width, height, elem) {
@@ -73,6 +72,22 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         });
 
         this.controls = controls;
+    };
+
+    Frame.prototype.positionCamera = function () {
+        // Calculate optimal camera position
+        this.particles.computeBoundingSphere();
+        var sphere = this.particles.boundingSphere;
+
+        // TODO: allow the user to specify a custom FOV
+        var fov = 45;
+
+        var optimalDistance = sphere.radius / Math.tan(fov / 2);
+
+        this.camera.position = sphere.center.clone();
+        this.camera.position.x += optimalDistance;
+
+        this.controls.target = sphere.center.clone();
     };
 
     Frame.prototype._initNodes = function (nodes) {
@@ -130,30 +145,28 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.scene.add(this.line);
     };
 
-    Frame.prototype._normalize = function () {
-        // Calculate bounding sphere
-        this.particles.computeBoundingSphere();
-        var sphere = this.particles.boundingSphere;
-        var center = [-sphere.center.x, -sphere.center.y, -sphere.center.z];
-
-        // Create/apply translation transformation matrix
-        var translation = new THREE.Matrix4();
-        translation.makeTranslation.apply(translation, center);
-        this.particles.applyMatrix(translation);
-        this.edges.applyMatrix(translation);
-
-        // Determine scale to normalize coordinates
-        var scale = 5 / sphere.radius;
-
-        // Scale coordinates
-        this.particleSystem.scale.set(scale, scale, scale);
-        this.line.scale.set(scale, scale, scale);
-    };
-
     Frame.prototype._animate = function () {
-        var self = this;
+        var self = this,
+            prevCameraPos;
 
+        // Update near/far camera range
         (function animate() {
+
+            // TODO: this shouldn't update every frame
+            var cameraPos = self.camera.position;
+            if (cameraPos !== prevCameraPos) {
+                var boundingSphere = self.particles.boundingSphere;
+                var distance = boundingSphere.distanceToPoint(cameraPos);
+
+                if (distance > 0) {
+                    self.camera.near = distance;
+                    self.camera.far = distance + boundingSphere.radius * 2;
+                    self.camera.updateProjectionMatrix();
+                }
+
+                prevCameraPos = cameraPos.clone();
+            }
+
             window.requestAnimationFrame(animate);
             self.controls.update();
         }());
