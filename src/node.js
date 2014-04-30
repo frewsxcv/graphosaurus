@@ -1,5 +1,7 @@
-define(function () {
+module.exports = (function () {
     "use strict";
+
+    var THREE = require("three");
 
     /**
      * Constructs a new Node
@@ -106,4 +108,4 @@ define(function () {
     };
 
     return Node;
-});
+}());

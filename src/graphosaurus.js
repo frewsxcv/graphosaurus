@@ -1,7 +1,13 @@
-define(["./frame", "./node", "./edge", "./graph", "./utils"], function (Frame, Node, Edge, Graph, utils) {
+(function () {
     "use strict";
 
-    return {
+    var Frame = require("./frame"),
+        Node = require("./node"),
+        Edge = require("./edge"),
+        Graph = require("./graph"),
+        utils = require("./utils");
+
+    window.G = window.Graphosaurus = {
         Frame: Frame,
         frame: utils.noNew(Frame),
 
@@ -14,4 +20,4 @@ define(["./frame", "./node", "./edge", "./graph", "./utils"], function (Frame, N
         Graph: Graph,
         graph: utils.noNew(Graph),
     };
-});
+}());

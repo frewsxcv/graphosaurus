@@ -35,31 +35,17 @@ module.exports = function (grunt) {
                 unused: true,
             }
         },
-        requirejs: {
-            compileWithoutThree: {
-                options: {
-                    baseUrl: ".",
-                    name: "build/almond/almond",
-                    include: ["src/graphosaurus"],
-                    out: "dist/graphosaurus.no-three.min.js",
-                    preserveLicenseComments: false,
-                    wrap: {
-                        startFile: "build/start.frag.js",
-                        endFile: "build/end.frag.js",
-                    }
-                }
-            },
-            compileWithThree: {
-                options: {
-                    baseUrl: ".",
-                    name: "build/almond/almond",
-                    include: ["src/graphosaurus"],
-                    out: "dist/graphosaurus.min.js",
-                    preserveLicenseComments: false,
-                    wrap: {
-                        startFile: ["build/start.frag.js", "build/three-r68.min.js"],
-                        endFile: "build/end.frag.js",
-                    }
+        browserify: {
+            dist: {
+                files: {
+                    "dist/graphosaurus.js": "src/**/*.js",
+                },
+            }
+        },
+        uglify: {
+            dist: {
+                files: {
+                    "dist/graphosaurus.min.js": "dist/graphosaurus.js"
                 }
             }
         },
@@ -71,13 +57,14 @@ module.exports = function (grunt) {
 
     // Load plugins
     grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-contrib-requirejs");
+    grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-browserify");
     grunt.loadNpmTasks("grunt-jsdoc");
 
     // Tasks
     grunt.registerTask("default", ["compile", "doc"]);
 
-    grunt.registerTask("compile", ["jshint", "requirejs"]);
+    grunt.registerTask("compile", ["jshint", "browserify", "uglify"]);
     grunt.registerTask("doc", ["jsdoc"]);
 };

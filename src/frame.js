@@ -1,5 +1,8 @@
-define(["../lib/trackball-controls/TrackballControls"], function (TrackballControls) {
+module.exports = (function () {
     "use strict";
+
+    var THREE = require("three"),
+        TrackballControls = require("../lib/trackball-controls/TrackballControls");
 
     var Frame = function (elem, graph) {
         if (typeof elem === 'string') {
@@ -176,4 +179,4 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     };
 
     return Frame;
-});
+}());
