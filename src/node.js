@@ -49,6 +49,10 @@ define(function () {
      *
      * @param {Array} pos - Array of three Numbers representing the position of the Node in 3D space (x, y, z)
      * @returns {Node} The Node the method was called on
+     *
+     * @example
+     * var x = 14, y = 20, z = -5;
+     * myNode.setPos([x, y, z]);
      */
     Node.prototype.setPos = function (pos) {
         this._pos.fromArray(pos);
