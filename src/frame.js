@@ -111,8 +111,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.particles = new THREE.Geometry();
         for (var i = 0; i < nodes.length; i++) {
             var node = nodes[i];
-            var vertex = node._pos.clone();
-            var color = node._color.clone();
+            var vertex = node._pos;
+            var color = node._color;
 
             this.particles.vertices.push(vertex);
             this.particles.colors.push(color);
@@ -136,10 +136,10 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         this.edges = new THREE.Geometry();
         for (var i = 0; i < edges.length; i++) {
             var nodes = edges[i].getNodes();
-            this.edges.vertices.push(nodes[0]._pos.clone());
-            this.edges.colors.push(edges[i]._color.clone());
-            this.edges.vertices.push(nodes[1]._pos.clone());
-            this.edges.colors.push(edges[i]._color.clone());
+            this.edges.vertices.push(nodes[0]._pos);
+            this.edges.colors.push(edges[i]._color);
+            this.edges.vertices.push(nodes[1]._pos);
+            this.edges.colors.push(edges[i]._color);
         }
         this.line = new THREE.Line(this.edges, material, THREE.LinePieces);
         this.scene.add(this.line);
