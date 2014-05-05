@@ -48,7 +48,7 @@ define(["./frame"], function (Frame) {
     Graph.prototype.addNode = function (node) {
         var id = node.getId();
 
-        if (id) {
+        if (id !== undefined) {
             this._nodeIds[id] = node;
         }
 

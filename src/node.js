@@ -29,7 +29,7 @@ define(function () {
         var color = properties.color || "white";
         this._color = new THREE.Color(color);
 
-        var id = properties.id || null;
+        var id = properties.id !== undefined ? properties.id : null;
         this._id = id;
 
         return this;
