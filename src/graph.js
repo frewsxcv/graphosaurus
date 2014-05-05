@@ -87,16 +87,24 @@ define(["./frame"], function (Frame) {
      * @returns {undefined}
      */
     Graph.prototype._resolveEdgeIds = function (edge) {
-        var nodes = edge.getNodes(), type;
+        var node, nodes = edge.getNodes(), type;
 
         type = typeof nodes[0];
         if (type === "string" || type === "number") {
-            nodes[0] = this.getNode(nodes[0]);
+            node = this.getNode(nodes[0]);
+            if (node === undefined) {
+                throw "Could not resolve id=" + nodes[0];
+            }
+            nodes[0] = node;
         }
 
         type = typeof nodes[1];
         if (type === "string" || type === "number") {
-            nodes[1] = this.getNode(nodes[1]);
+            node = this.getNode(nodes[1]);
+            if (node === undefined) {
+                throw "Could not resolve id=" + nodes[1];
+            }
+            nodes[1] = node;
         }
     };
 
