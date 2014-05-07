@@ -68,7 +68,8 @@ define(function () {
      * myEdge.setColor("green");
      */
     Edge.prototype.setColor = function (color) {
-        if (color) {
+        // TODO: Should this validate string CSS colors?
+        if (color !== undefined) {
             this._color.set(color);
         }
         return this;
