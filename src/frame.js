@@ -97,6 +97,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             size: this.graph._nodeSize,
             vertexColors: true,
             sizeAttenuation: this.graph._sizeAttenuation,
+            depthWrite: false,
         });
 
         if (this.graph._nodeImage !== undefined) {
@@ -132,6 +133,8 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
         var material = new THREE.LineBasicMaterial({
             vertexColors: true,
             linewidth: this.graph._edgeWidth,
+            opacity: this.graph._edgeOpacity,
+            transparent: this.graph._edgeOpacity < 1,
         });
         this.edges = new THREE.Geometry();
         for (var i = 0; i < edges.length; i++) {
