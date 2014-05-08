@@ -37,7 +37,7 @@ define(["./frame"], function (Frame) {
 
         this._nodeSize = properties.nodeSize !== undefined ? properties.nodeSize : 10;
 
-        this._bgColor = properties.bgColor || "white";
+        this._bgColor = properties.bgColor !== undefined ? properties.bgColor : "white";
 
         this._bgOpacity = properties.bgOpacity !== undefined ? properties.bgOpacity : 1;
 
