@@ -26,7 +26,7 @@ define(function () {
     Node.prototype._initProps = function (properties) {
         properties = properties || {};
 
-        var color = properties.color || "white";
+        var color = properties.color !== undefined ? properties.color : "white";
         this._color = new THREE.Color(color);
 
         var id = properties.id !== undefined ? properties.id : null;
