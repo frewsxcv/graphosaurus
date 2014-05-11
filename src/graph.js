@@ -111,6 +111,12 @@ define(["./frame"], function (Frame) {
         }
     };
 
+    /**
+     * Render the Graph in a DOM element
+     *
+     * @param {Element|String} elem - Element the Graph should be rendered in. Specify Element ID if string.
+     * @returns {Graph} The Graph the method was called on
+     */
     Graph.prototype.renderIn = function (elem) {
         return new Frame(elem, this);
     };
