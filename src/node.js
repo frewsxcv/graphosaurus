@@ -63,6 +63,10 @@ define(function () {
      * Get the position of the Node
      *
      * @returns {Array} Array of three Numbers representing the position of the Node in 3D space (x, y, z)
+     *
+     * @example
+     * var x = 14, y = 20, z = -5;
+     * myNode.getPos([x, y, z]);
      */
     Node.prototype.getPos = function () {
         return this._pos.toArray();
