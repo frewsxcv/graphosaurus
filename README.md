@@ -1,5 +1,7 @@
 # Graphosaurus
 
+[![Build Status](https://travis-ci.org/frewsxcv/graphosaurus.svg)](https://travis-ci.org/frewsxcv/graphosaurus)
+
 A three-dimensional static graph viewer.
 
 ## Build
