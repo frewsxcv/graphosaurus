@@ -32,7 +32,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     Frame.prototype._initCamera = function (aspect) {
         var self = this;
 
-        var viewAngle = 45;
+        var viewAngle = this.graph._fov;
         var camera = new THREE.PerspectiveCamera(viewAngle, aspect);
 
         this.camera = camera;

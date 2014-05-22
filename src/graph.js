@@ -8,6 +8,7 @@ define(["./frame"], function (Frame) {
      *
      * @param {Object} props - Object containing optional properties of the Graph
      * @param {Boolean} props.antialias - 'true' if antialiasing should be enabled on the graph. Defaults to 'false'.
+     * @param {Number} props.fov - Degree represting the field of view for the camera. Defaults to 45.
      * @param {Boolean} props.sizeAttenuation - 'true' if nodes' size should change with distance. Defaults to 'false'.
      * @param {String} props.nodeImage - Path to an image to use for the graph nodes, defaults to no image.
      * @param {Boolean} props.nodeImageTransparent - 'true' if the node image has transparency, defaults to 'false'.
@@ -28,6 +29,8 @@ define(["./frame"], function (Frame) {
         properties = properties || {};
 
         this._antialias = !!properties.antialias;
+
+        this._fov = properties.fov !== undefined ? properties.fov : 45;
 
         this._sizeAttenuation = !!properties.sizeAttenuation;
 
