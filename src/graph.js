@@ -1,5 +1,7 @@
-define(["./frame"], function (Frame) {
+module.exports = (function () {
     "use strict";
+
+    var Frame = require('./frame.js');
 
     /**
      * Constructs a new Graph
@@ -125,4 +127,4 @@ define(["./frame"], function (Frame) {
     };
 
     return Graph;
-});
+}());

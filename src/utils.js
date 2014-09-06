@@ -1,4 +1,4 @@
-define(function () {
+module.exports = (function () {
     "use strict";
 
     /**
@@ -15,4 +15,4 @@ define(function () {
     return {
         noNew: noNew,
     };
-});
+}());

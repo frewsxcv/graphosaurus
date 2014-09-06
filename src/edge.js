@@ -1,5 +1,7 @@
-define(function () {
+module.exports = (function () {
     "use strict";
+
+    var THREE = require("three");
 
     /**
      * Constructs a new Edge
@@ -100,4 +102,4 @@ define(function () {
     };
 
     return Edge;
-});
+}());
