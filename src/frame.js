@@ -93,7 +93,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
     Frame.prototype._initNodes = function (nodes) {
         var self = this;
 
-        var material = new THREE.ParticleSystemMaterial({
+        var material = new THREE.PointCloudMaterial({
             size: this.graph._nodeSize,
             vertexColors: true,
             sizeAttenuation: this.graph._sizeAttenuation,
@@ -119,7 +119,7 @@ define(["../lib/trackball-controls/TrackballControls"], function (TrackballContr
             this.particles.colors.push(color);
         }
 
-        this.particleSystem = new THREE.ParticleSystem(this.particles, material);
+        this.particleSystem = new THREE.PointCloud(this.particles, material);
 
         if (this.graph._nodeImageTransparent === true) {
             material.transparent = true;

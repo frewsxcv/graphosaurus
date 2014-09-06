@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                     out: "dist/graphosaurus.min.js",
                     preserveLicenseComments: false,
                     wrap: {
-                        startFile: ["build/start.frag.js", "build/three-r66.min.js"],
+                        startFile: ["build/start.frag.js", "build/three-r68.min.js"],
                         endFile: "build/end.frag.js",
                     }
                 }
