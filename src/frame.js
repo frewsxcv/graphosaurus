@@ -112,15 +112,26 @@ module.exports = (function () {
             material.map = texture;
         }
 
-        this.particles = new THREE.Geometry();
+        var positions = new Float32Array(nodes.length * 3);
+        var colors = new Float32Array(nodes.length * 3);
         for (var i = 0; i < nodes.length; i++) {
             var node = nodes[i];
-            var vertex = node._pos;
+            var pos = node._pos;
             var color = node._color;
 
-            this.particles.vertices.push(vertex);
-            this.particles.colors.push(color);
+            positions[3 * i] = pos.x;
+            positions[3 * i + 1] = pos.y;
+            positions[3 * i + 2] = pos.z;
+
+            colors[3 * i] = color.r;
+            colors[3 * i + 1] = color.g;
+            colors[3 * i + 2] = color.b;
         }
+        this.particles = new THREE.BufferGeometry();
+        this.particles.addAttribute(
+            'position', new THREE.BufferAttribute(positions, 3));
+        this.particles.addAttribute(
+            'color', new THREE.BufferAttribute(colors, 3));
 
         this.particleSystem = new THREE.PointCloud(this.particles, material);
 
@@ -139,14 +150,35 @@ module.exports = (function () {
             opacity: this.graph._edgeOpacity,
             transparent: this.graph._edgeOpacity < 1,
         });
-        this.edges = new THREE.Geometry();
+
+        var positions = new Float32Array(edges.length * 6);
+        var colors = new Float32Array(edges.length * 6);
         for (var i = 0; i < edges.length; i++) {
             var nodes = edges[i].getNodes();
-            this.edges.vertices.push(nodes[0]._pos);
-            this.edges.colors.push(edges[i]._color);
-            this.edges.vertices.push(nodes[1]._pos);
-            this.edges.colors.push(edges[i]._color);
+
+            positions[3 * i] = nodes[0]._pos.x;
+            positions[3 * i + 1] = nodes[0]._pos.y;
+            positions[3 * i + 2] = nodes[0]._pos.z;
+
+            positions[3 * i + 3] = nodes[1]._pos.x;
+            positions[3 * i + 4] = nodes[1]._pos.y;
+            positions[3 * i + 5] = nodes[1]._pos.z;
+
+            colors[3 * i] = edges[i]._color.r;
+            colors[3 * i + 1] = edges[i]._color.g;
+            colors[3 * i + 2] = edges[i]._color.b;
+
+            colors[3 * i + 3] = edges[i]._color.r;
+            colors[3 * i + 4] = edges[i]._color.g;
+            colors[3 * i + 5] = edges[i]._color.b;
         }
+
+        this.edges = new THREE.BufferGeometry();
+        this.edges.addAttribute(
+            'position', new THREE.BufferAttribute(positions, 3));
+        this.edges.addAttribute(
+            'color', new THREE.BufferAttribute(colors, 3));
+
         this.line = new THREE.Line(this.edges, material, THREE.LinePieces);
         this.scene.add(this.line);
     };
