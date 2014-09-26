@@ -164,13 +164,9 @@ module.exports = (function () {
             positions[3 * i + 4] = nodes[1]._pos.y;
             positions[3 * i + 5] = nodes[1]._pos.z;
 
-            colors[3 * i] = edges[i]._color.r;
-            colors[3 * i + 1] = edges[i]._color.g;
-            colors[3 * i + 2] = edges[i]._color.b;
-
-            colors[3 * i + 3] = edges[i]._color.r;
-            colors[3 * i + 4] = edges[i]._color.g;
-            colors[3 * i + 5] = edges[i]._color.b;
+            colors[3 * i] = colors[3 * i + 3] = edges[i]._color.r;
+            colors[3 * i + 1] = colors[3 * i + 4] = edges[i]._color.g;
+            colors[3 * i + 2] = colors[3 * i + 5] = edges[i]._color.b;
         }
 
         this.edges = new THREE.BufferGeometry();
