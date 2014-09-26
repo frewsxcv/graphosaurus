@@ -79,8 +79,8 @@ module.exports = (function () {
 
     Frame.prototype.positionCamera = function () {
         // Calculate optimal camera position
-        this.particles.computeBoundingSphere();
-        var sphere = this.particles.boundingSphere;
+        this.points.computeBoundingSphere();
+        var sphere = this.points.boundingSphere;
 
         // TODO: allow the user to specify a custom FOV
         var fov = 45;
@@ -127,20 +127,20 @@ module.exports = (function () {
             colors[3 * i + 1] = color.g;
             colors[3 * i + 2] = color.b;
         }
-        this.particles = new THREE.BufferGeometry();
-        this.particles.addAttribute(
+        this.points = new THREE.BufferGeometry();
+        this.points.addAttribute(
             'position', new THREE.BufferAttribute(positions, 3));
-        this.particles.addAttribute(
+        this.points.addAttribute(
             'color', new THREE.BufferAttribute(colors, 3));
 
-        this.particleSystem = new THREE.PointCloud(this.particles, material);
+        this.pointCloud = new THREE.PointCloud(this.points, material);
 
         if (this.graph._nodeImageTransparent === true) {
             material.transparent = true;
-            this.particleSystem.sortParticles = true;
+            this.pointCloud.sortParticles = true;
         }
 
-        this.scene.add(this.particleSystem);
+        this.scene.add(this.pointCloud);
     };
 
     Frame.prototype._initEdges = function (edges) {
@@ -193,7 +193,7 @@ module.exports = (function () {
             // TODO: this shouldn't update every frame
             var cameraPos = self.camera.position;
             if (cameraPos !== prevCameraPos) {
-                var boundingSphere = self.particles.boundingSphere;
+                var boundingSphere = self.points.boundingSphere;
                 var distance = boundingSphere.distanceToPoint(cameraPos);
 
                 if (distance > 0) {
