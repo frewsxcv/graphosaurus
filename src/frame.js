@@ -25,6 +25,14 @@ module.exports = (function () {
 
         this.positionCamera();
 
+        var mouse = this.mouse = { x: 1, y: 1 };
+        document.addEventListener('mousemove', function (evt) {
+            evt.preventDefault();
+
+            mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
+        }, false);
+
         this._animate();
     };
 
@@ -183,12 +191,22 @@ module.exports = (function () {
         this.scene.add(this.line);
     };
 
+    Frame.prototype._handleClicks = (function () {
+        var vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
+        var raycaster = new THREE.Projector().pickingRay(vector, this.camera);
+        var intersects = raycaster.intersectObject(this.pointCloud);
+        if (intersects.length) {
+            window.console.log(intersects);
+        }
+    });
+
     Frame.prototype._animate = function () {
         var self = this,
             prevCameraPos;
 
         // Update near/far camera range
         (function animate() {
+            self._handleClicks();
 
             // TODO: this shouldn't update every frame
             var cameraPos = self.camera.position;
