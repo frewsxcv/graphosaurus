@@ -25,12 +25,15 @@ module.exports = (function () {
 
         this.positionCamera();
 
-        var mouse = this.mouse = { x: 1, y: 1 };
+        this.mouse = {x: 0, y: 0};
+        var self = this;
         document.addEventListener('mousemove', function (evt) {
             evt.preventDefault();
 
-            mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
+            self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
+            self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
+
+            self._handleClicks();
         }, false);
 
         this._animate();
