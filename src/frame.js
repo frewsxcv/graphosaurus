@@ -195,13 +195,20 @@ module.exports = (function () {
     };
 
     Frame.prototype._handleClicks = (function () {
-        var vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
-        var raycaster = new THREE.Projector().pickingRay(vector, this.camera);
-        var intersects = raycaster.intersectObject(this.pointCloud);
-        if (intersects.length) {
-            window.console.log(intersects);
-        }
-    });
+        var raycaster = new THREE.Raycaster();
+        var projector = new THREE.Projector();
+
+        return function () {
+            var vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
+            projector.unprojectVector(vector, this.camera);
+            raycaster.params.PointCloud.threshold = 10000000000000000;
+            raycaster.set(this.camera.position, vector.sub(this.camera.position).normalize());
+            var intersects = raycaster.intersectObject(this.pointCloud);
+            if (intersects.length) {
+                window.console.log(intersects[0]);
+            }
+        };
+    }());
 
     Frame.prototype._animate = function () {
         var self = this,
