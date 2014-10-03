@@ -199,10 +199,15 @@ module.exports = (function () {
         var projector = new THREE.Projector();
 
         return function () {
-            var vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
-            projector.unprojectVector(vector, this.camera);
+            // Calculate mouse position
+            var mousePosition = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
+            projector.unprojectVector(mousePosition, this.camera);
+
+            // Calculate threshold
             raycaster.params.PointCloud.threshold = 10000000000000000;
-            raycaster.set(this.camera.position, vector.sub(this.camera.position).normalize());
+
+            // Determine intersects
+            raycaster.set(this.camera.position, mousePosition.sub(this.camera.position).normalize());
             var intersects = raycaster.intersectObject(this.pointCloud);
             if (intersects.length) {
                 window.console.log(intersects[0]);
