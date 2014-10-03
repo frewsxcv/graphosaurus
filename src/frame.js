@@ -221,8 +221,6 @@ module.exports = (function () {
 
         // Update near/far camera range
         (function animate() {
-            self._handleClicks();
-
             // TODO: this shouldn't update every frame
             var cameraPos = self.camera.position;
             if (cameraPos !== prevCameraPos) {
