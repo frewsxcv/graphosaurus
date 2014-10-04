@@ -27,7 +27,7 @@ module.exports = (function () {
 
         this.mouse = {x: 0, y: 0};
         var self = this;
-        document.addEventListener('mousemove', function (evt) {
+        elem.addEventListener('mousemove', function (evt) {
             evt.preventDefault();
 
             self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
