@@ -28,17 +28,34 @@ module.exports = (function () {
 
         this.mouse = {x: 0, y: 0};
         var self = this;
-        elem.addEventListener('mousemove', function (evt) {
-            evt.preventDefault();
 
-            self.mouse.clientX = evt.clientX;
-            self.mouse.clientY = evt.clientY;
+        if (this.graph._hover) {
+            elem.addEventListener('mousemove', function (evt) {
+                evt.preventDefault();
 
-            self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
-            self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
+                self.mouse.clientX = evt.clientX;
+                self.mouse.clientY = evt.clientY;
 
-            self._handleClicks();
-        }, false);
+                self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
+                self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
+
+                self._mouseEvent(self.graph._hover);
+            }, false);
+        }
+
+        if (this.graph._click) {
+            elem.addEventListener('click', function (evt) {
+                evt.preventDefault();
+
+                self.mouse.clientX = evt.clientX;
+                self.mouse.clientY = evt.clientY;
+
+                self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
+                self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
+
+                self._mouseEvent(self.graph._click);
+            }, false);
+        }
 
         this._animate();
     };
@@ -209,11 +226,11 @@ module.exports = (function () {
         this.scene.add(this.line);
     };
 
-    Frame.prototype._handleClicks = (function () {
+    Frame.prototype._mouseEvent = (function () {
         var raycaster = new THREE.Raycaster();
         var projector = new THREE.Projector();
 
-        return function () {
+        return function (callback) {
             // Calculate mouse position
             var mousePosition = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
             var radiusPosition = mousePosition.clone();
@@ -234,7 +251,7 @@ module.exports = (function () {
             raycaster.set(this.camera.position, mousePosition.sub(this.camera.position).normalize());
             var intersects = raycaster.intersectObject(this.pointCloud);
             if (intersects.length) {
-                window.console.log(intersects[0]);
+                callback(intersects[0]);
             }
         };
     }());
