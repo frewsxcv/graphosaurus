@@ -228,19 +228,18 @@ module.exports = (function () {
 
     Frame.prototype._mouseEvent = (function () {
         var raycaster = new THREE.Raycaster();
-        var projector = new THREE.Projector();
 
         return function (callback) {
             // Calculate mouse position
             var mousePosition = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
             var radiusPosition = mousePosition.clone();
-            projector.unprojectVector(mousePosition, this.camera);
+            mousePosition.unproject(this.camera);
 
             // Calculate threshold
             var clickRadiusPx = 5;  // 5px
             var radiusX = ((this.mouse.clientX + clickRadiusPx) / window.innerWidth) * 2 - 1;
             radiusPosition.setX(radiusX);
-            projector.unprojectVector(radiusPosition, this.camera);
+            radiusPosition.unproject(this.camera);
 
             var clickRadius = radiusPosition.distanceTo(mousePosition);
             var threshold = this.camera.far * clickRadius / this.camera.near;
