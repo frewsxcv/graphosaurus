@@ -18,12 +18,44 @@ module.exports = (function () {
         this._initScene();
         this._initRenderer(width, height, elem);
         this._initNodes(graph.getNodes());
+        this._normalizeNodes();
         this._initEdges(graph.getEdges());
 
         this._initCamera(aspectRatio);
         this._initControls(elem);
 
         this.positionCamera();
+
+        this.mouse = {x: 0, y: 0};
+        var self = this;
+
+        if (this.graph._hover) {
+            elem.addEventListener('mousemove', function (evt) {
+                evt.preventDefault();
+
+                self.mouse.clientX = evt.clientX;
+                self.mouse.clientY = evt.clientY;
+
+                self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
+                self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
+
+                self._mouseEvent(self.graph._hover);
+            }, false);
+        }
+
+        if (this.graph._click) {
+            elem.addEventListener('click', function (evt) {
+                evt.preventDefault();
+
+                self.mouse.clientX = evt.clientX;
+                self.mouse.clientY = evt.clientY;
+
+                self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
+                self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
+
+                self._mouseEvent(self.graph._click);
+            }, false);
+        }
 
         this._animate();
     };
@@ -143,6 +175,17 @@ module.exports = (function () {
         this.scene.add(this.pointCloud);
     };
 
+    Frame.prototype._normalizeNodes = function () {
+        this.points.computeBoundingSphere();
+
+        this.scale = 1 / this.points.boundingSphere.radius;
+        var positions = this.points.attributes.position.array;
+
+        for (var i = 0; i < positions.length; i++) {
+            positions[i] *= this.scale;
+        }
+    };
+
     Frame.prototype._initEdges = function (edges) {
         var material = new THREE.LineBasicMaterial({
             vertexColors: true,
@@ -156,13 +199,13 @@ module.exports = (function () {
         for (var i = 0; i < edges.length; i++) {
             var nodes = edges[i].getNodes();
 
-            positions[3 * i] = nodes[0]._pos.x;
-            positions[3 * i + 1] = nodes[0]._pos.y;
-            positions[3 * i + 2] = nodes[0]._pos.z;
+            positions[3 * i] =     this.scale * nodes[0]._pos.x;
+            positions[3 * i + 1] = this.scale * nodes[0]._pos.y;
+            positions[3 * i + 2] = this.scale * nodes[0]._pos.z;
 
-            positions[3 * i + 3] = nodes[1]._pos.x;
-            positions[3 * i + 4] = nodes[1]._pos.y;
-            positions[3 * i + 5] = nodes[1]._pos.z;
+            positions[3 * i + 3] = this.scale * nodes[1]._pos.x;
+            positions[3 * i + 4] = this.scale * nodes[1]._pos.y;
+            positions[3 * i + 5] = this.scale * nodes[1]._pos.z;
 
             colors[3 * i] = colors[3 * i + 3] = edges[i]._color.r;
             colors[3 * i + 1] = colors[3 * i + 4] = edges[i]._color.g;
@@ -179,13 +222,41 @@ module.exports = (function () {
         this.scene.add(this.line);
     };
 
+    Frame.prototype._mouseEvent = (function () {
+        var raycaster = new THREE.Raycaster();
+
+        return function (callback) {
+            // Calculate mouse position
+            var mousePosition = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
+            var radiusPosition = mousePosition.clone();
+            mousePosition.unproject(this.camera);
+
+            // Calculate threshold
+            var clickRadiusPx = 5;  // 5px
+            var radiusX = ((this.mouse.clientX + clickRadiusPx) / window.innerWidth) * 2 - 1;
+            radiusPosition.setX(radiusX);
+            radiusPosition.unproject(this.camera);
+
+            var clickRadius = radiusPosition.distanceTo(mousePosition);
+            var threshold = this.camera.far * clickRadius / this.camera.near;
+
+            raycaster.params.PointCloud.threshold = threshold;
+
+            // Determine intersects
+            raycaster.set(this.camera.position, mousePosition.sub(this.camera.position).normalize());
+            var intersects = raycaster.intersectObject(this.pointCloud);
+            if (intersects.length) {
+                callback(intersects[0]);
+            }
+        };
+    }());
+
     Frame.prototype._animate = function () {
         var self = this,
             prevCameraPos;
 
         // Update near/far camera range
         (function animate() {
-
             // TODO: this shouldn't update every frame
             var cameraPos = self.camera.position;
             if (cameraPos !== prevCameraPos) {

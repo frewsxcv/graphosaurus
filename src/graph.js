@@ -19,6 +19,8 @@ module.exports = (function () {
      * @param {Number} props.edgeWidth - Number representing the width (in pixels) of the edges within the graph, defaults to 1
      * @param {Number|String} props.bgColor - Hexadecimal or CSS-style string representation the color of the background, defaults to 'white'
      * @param {Number} props.bgOpacity - Number (between 0 and 1) indicating the percentage opacity of the background, defaults to 1 (100%)
+     * @param {Function} props.hover - Callback function that will be called when the mouse hovers over a node. Event data will be passed as a parameter to the callback.
+     * @param {Function} props.click - Callback function that will be called when the mouse clicks a node. Event data will be passed as a parameter to the callback.
      */
     var Graph = function (props) {
         this._nodeIds = {};
@@ -49,6 +51,10 @@ module.exports = (function () {
         this._edgeWidth = properties.edgeWidth !== undefined ? properties.edgeWidth : 1;
 
         this._edgeOpacity = properties.edgeOpacity !== undefined ? properties.edgeOpacity : 1;
+
+        this._hover = properties.hover || undefined;
+
+        this._click = properties.click || undefined;
 
         return this;
     };
