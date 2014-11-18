@@ -36,10 +36,9 @@ module.exports = function (grunt) {
             }
         },
         browserify: {
-            dist: {
-                files: {
-                    "dist/graphosaurus.js": "src/**/*.js",
-                },
+            graphosaurus: {
+                src: ["src/**/*.js"],
+                dest: "dist/graphosaurus.js",
             }
         },
         uglify: {
