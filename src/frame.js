@@ -18,6 +18,7 @@ module.exports = (function () {
         this._initScene();
         this._initRenderer(width, height, elem);
         this._initNodes(graph.getNodes());
+        this._normalizeNodes();
         this._initEdges(graph.getEdges());
 
         this._initCamera(aspectRatio);
@@ -154,6 +155,17 @@ module.exports = (function () {
         this.scene.add(this.pointCloud);
     };
 
+    Frame.prototype._normalizeNodes = function () {
+        this.points.computeBoundingSphere();
+
+        this.scale = 1 / this.points.boundingSphere.radius;
+        var positions = this.points.attributes.position.array;
+
+        for (var i = 0; i < positions.length; i++) {
+            positions[i] *= this.scale;
+        }
+    };
+
     Frame.prototype._initEdges = function (edges) {
         var material = new THREE.LineBasicMaterial({
             vertexColors: true,
@@ -167,13 +179,13 @@ module.exports = (function () {
         for (var i = 0; i < edges.length; i++) {
             var nodes = edges[i].getNodes();
 
-            positions[3 * i] = nodes[0]._pos.x;
-            positions[3 * i + 1] = nodes[0]._pos.y;
-            positions[3 * i + 2] = nodes[0]._pos.z;
+            positions[3 * i] =     this.scale * nodes[0]._pos.x;
+            positions[3 * i + 1] = this.scale * nodes[0]._pos.y;
+            positions[3 * i + 2] = this.scale * nodes[0]._pos.z;
 
-            positions[3 * i + 3] = nodes[1]._pos.x;
-            positions[3 * i + 4] = nodes[1]._pos.y;
-            positions[3 * i + 5] = nodes[1]._pos.z;
+            positions[3 * i + 3] = this.scale * nodes[1]._pos.x;
+            positions[3 * i + 4] = this.scale * nodes[1]._pos.y;
+            positions[3 * i + 5] = this.scale * nodes[1]._pos.z;
 
             colors[3 * i] = edges[i]._color.r;
             colors[3 * i + 1] = edges[i]._color.g;
