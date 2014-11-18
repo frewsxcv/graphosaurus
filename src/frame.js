@@ -31,6 +31,9 @@ module.exports = (function () {
         elem.addEventListener('mousemove', function (evt) {
             evt.preventDefault();
 
+            self.mouse.clientX = evt.clientX;
+            self.mouse.clientY = evt.clientY;
+
             self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
             self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
 
@@ -213,10 +216,19 @@ module.exports = (function () {
         return function () {
             // Calculate mouse position
             var mousePosition = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
+            var radiusPosition = mousePosition.clone();
             projector.unprojectVector(mousePosition, this.camera);
 
             // Calculate threshold
-            raycaster.params.PointCloud.threshold = 10000000000000000;
+            var clickRadiusPx = 5;  // 5px
+            var radiusX = ((this.mouse.clientX + clickRadiusPx) / window.innerWidth) * 2 - 1;
+            radiusPosition.setX(radiusX);
+            projector.unprojectVector(radiusPosition, this.camera);
+
+            var clickRadius = radiusPosition.distanceTo(mousePosition);
+            var threshold = this.camera.far * clickRadius / this.camera.near;
+
+            raycaster.params.PointCloud.threshold = threshold;
 
             // Determine intersects
             raycaster.set(this.camera.position, mousePosition.sub(this.camera.position).normalize());
