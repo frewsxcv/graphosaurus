@@ -9,7 +9,7 @@ A three-dimensional static graph viewer.
 1. Install [node](http://nodejs.org/), [npm](https://www.npmjs.org/), and [grunt-cli](https://www.npmjs.org/package/grunt-cli)
 1. Clone the graphosaurus repository
 1. Run `npm install` to install all the build requirements
-1. Run `grunt compile` to build graphosaurus to `dist/`
+1. Run `grunt` to build graphosaurus to `dist/`
 
 ## Third party libraries
 
