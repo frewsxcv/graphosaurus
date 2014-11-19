@@ -64,18 +64,22 @@ While this is an very basic example, I hope I've demonstrated how simple it is t
 1. Run `npm install` to install all the build requirements
 1. Run `grunt` to build Graphosaurus. The resulting compiled JavaScript will be in `dist/` and the docs will be in `doc/`
 
-## Third party libraries bundled with Graphosaurus
-
-* [`three.js`](https://github.com/mrdoob/three.js/)
- * Used because writing WebGL is time consuming
- * [License](https://github.com/mrdoob/three.js/blob/master/LICENSE)
-
-* [`TrackballControls.js`](https://github.com/mrdoob/three.js/blob/master/examples/js/controls/TrackballControls.js)
- * Used for graph movement/controls
- * [License](https://github.com/mrdoob/three.js/blob/master/LICENSE)
-
 ## Mascot
 
 ![gryposaurus](https://upload.wikimedia.org/wikipedia/commons/7/70/Gryposaurus-notabilis_jconway.png)
 
 [John Conway](https://en.wikipedia.org/wiki/User:John.Conway)'s illustration of our glorious leader, the ~~[gryposaurus](https://en.wikipedia.org/wiki/gryposaurus)~~ graphosaurus.
+
+## Copyright
+
+* [`three.js`](https://github.com/mrdoob/three.js/)
+ * Used because writing WebGL is time consuming
+ * [MIT](https://github.com/mrdoob/three.js/blob/master/LICENSE)
+
+* [`TrackballControls.js`](https://github.com/mrdoob/three.js/blob/master/examples/js/controls/TrackballControls.js)
+ * Used for graph controls
+ * [MIT](https://github.com/mrdoob/three.js/blob/master/LICENSE)
+
+* `Graphosaurus`
+ * Everything else in this repository
+ * [MPL v2](https://github.com/frewsxcv/graphosaurus/blob/master/LICENSE.md)
