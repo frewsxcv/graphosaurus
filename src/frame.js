@@ -123,8 +123,9 @@ module.exports = (function () {
 
         var optimalDistance = sphere.radius * 1.5 / Math.tan(fov / 2);
 
-        this.camera.position.x += sphere.center.x + optimalDistance;
+        this.camera.position.x = sphere.center.x + optimalDistance;
         this.camera.position.y = sphere.center.y;
+        this.camera.position.z = sphere.center.z;
 
         this.controls.target = sphere.center.clone();
     };
