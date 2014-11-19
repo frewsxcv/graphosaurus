@@ -11,11 +11,14 @@ A three-dimensional static graph viewer.
 1. Run `npm install` to install all the build requirements
 1. Run `grunt` to build graphosaurus to `dist/`
 
-## Third party libraries
+## Third party libraries bundled with Graphosaurus
 
-* `lib/tracking-controls`
+* [`three.js`](https://github.com/mrdoob/three.js/)
+ * Used because writing WebGL is time consuming
+ * [License](https://github.com/mrdoob/three.js/blob/master/LICENSE)
+
+* [`TrackballControls.js`](https://github.com/mrdoob/three.js/blob/master/examples/js/controls/TrackballControls.js)
  * Used for graph movement/controls
- * Taken from [mrdoob/three.js](https://github.com/mrdoob/three.js/blob/master/examples/js/controls/TrackballControls.js)
  * [License](https://github.com/mrdoob/three.js/blob/master/LICENSE)
 
 ## Mascot
