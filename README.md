@@ -6,10 +6,10 @@ A three-dimensional static graph viewer.
 
 ## Build
 
+1. Run `git clone https://github.com/frewsxcv/graphosaurus.git` to clone this repository
 1. Install [node](http://nodejs.org/), [npm](https://www.npmjs.org/), and [grunt-cli](https://www.npmjs.org/package/grunt-cli)
-1. Clone the graphosaurus repository
 1. Run `npm install` to install all the build requirements
-1. Run `grunt` to build graphosaurus to `dist/`
+1. Run `grunt` to build Graphosaurus. The resulting compiled JavaScript will be in `dist/` and the docs will be in `doc/`
 
 ## Third party libraries bundled with Graphosaurus
 
