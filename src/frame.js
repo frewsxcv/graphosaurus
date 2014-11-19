@@ -9,6 +9,10 @@ module.exports = (function () {
             elem = document.getElementById(elem);
         }
 
+        if (graph._nodes.length < 2) {
+            throw "A graph needs at least two nodes";
+        }
+
         this.graph = graph;
 
         var width = elem.scrollWidth;
@@ -117,10 +121,11 @@ module.exports = (function () {
         // TODO: allow the user to specify a custom FOV
         var fov = 45;
 
-        var optimalDistance = sphere.radius / Math.tan(fov / 2);
+        var optimalDistance = sphere.radius * 1.5 / Math.tan(fov / 2);
 
-        this.camera.position.x += sphere.center.x + optimalDistance;
+        this.camera.position.x = sphere.center.x + optimalDistance;
         this.camera.position.y = sphere.center.y;
+        this.camera.position.z = sphere.center.z;
 
         this.controls.target = sphere.center.clone();
     };
