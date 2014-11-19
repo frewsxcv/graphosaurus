@@ -4,6 +4,59 @@
 
 A three-dimensional static graph viewer.
 
+## Twenty second tutorial
+
+```html
+<html>
+  <head>
+    <style>
+    #graph {
+      width: 500px;
+      height: 500px;
+      border: 1px solid grey;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="graph"></div>
+
+    <script src="graphosaurus.min.js"></script>
+    <script>
+      // JavaScript will go here
+    </script>
+  </body>
+</html>
+```
+
+If you open this up in your web browser, you'll see something that looks like this:
+
+![](https://i.imgur.com/LnAvptu.png)
+
+Look at that amazing square! Now lets create a graph, a couple nodes, and an edge between the nodes:
+
+```js
+var graph = G.graph()
+
+// Create a red node with cartesian coordinates x=0, y=0, z=0
+var redNode = G.node([0, 0, 0], {color: "red"});
+graph.addNode(redNode);
+
+// You can also use the addTo method to add to the graph
+var greenNode = G.node([1, 1, 1], {color: "green"}).addTo(graph);
+
+var edge = G.edge([redNode, greenNode], {color: "blue"});
+graph.addEdge(edge);  // or edge.addTo(graph)
+
+// Render the graph in the HTML element with id='graph'
+graph.renderIn("graph");
+```
+
+After substituting this JavaScript into the `<script>` block, you should see this:
+
+![](https://i.imgur.com/0ylXUd6.gif)
+
+While this is an very basic example, I hope I've demonstrated how simple it is to create graphs with Graphosaurus.
+
 ## Build
 
 1. Run `git clone https://github.com/frewsxcv/graphosaurus.git` to clone this repository
