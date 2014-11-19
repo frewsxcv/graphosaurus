@@ -9,6 +9,10 @@ module.exports = (function () {
             elem = document.getElementById(elem);
         }
 
+        if (graph._nodes.length < 2) {
+            throw "A graph needs at least two nodes";
+        }
+
         this.graph = graph;
 
         var width = elem.scrollWidth;
