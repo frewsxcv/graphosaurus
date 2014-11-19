@@ -51,7 +51,7 @@ graph.addEdge(edge);  // or edge.addTo(graph)
 graph.renderIn("graph");
 ```
 
-After substituting this JavaScript into the `<script>` block, you should see this:
+After inserting this JavaScript in the `<script>` block, you should see this:
 
 ![](https://i.imgur.com/0ylXUd6.gif)
 
