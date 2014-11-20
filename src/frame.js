@@ -118,10 +118,7 @@ module.exports = (function () {
         this.points.computeBoundingSphere();
         var sphere = this.points.boundingSphere;
 
-        // TODO: allow the user to specify a custom FOV
-        var fov = 45;
-
-        var optimalDistance = sphere.radius * 1.5 / Math.tan(fov / 2);
+        var optimalDistance = sphere.radius * 1.5 / Math.tan(this.graph._fov / 2);
 
         this.camera.position.x = sphere.center.x + optimalDistance;
         this.camera.position.y = sphere.center.y;
