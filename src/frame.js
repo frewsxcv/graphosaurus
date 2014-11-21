@@ -33,8 +33,8 @@ module.exports = (function () {
         this.mouse = {x: 0, y: 0};
         var self = this;
 
-        if (this.graph._hover) {
-            elem.addEventListener('mousemove', function (evt) {
+        var handleMouseEvent = function (handler) {
+            return function (evt) {
                 evt.preventDefault();
 
                 self.mouse.clientX = evt.clientX;
@@ -43,22 +43,16 @@ module.exports = (function () {
                 self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
                 self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
 
-                self._mouseEvent(self.graph._hover);
-            }, false);
+                self._mouseEvent(handler);
+            };
+        };
+
+        if (this.graph._hover) {
+            elem.addEventListener('mousemove', handleMouseEvent(self.graph._hover), false);
         }
 
         if (this.graph._click) {
-            elem.addEventListener('click', function (evt) {
-                evt.preventDefault();
-
-                self.mouse.clientX = evt.clientX;
-                self.mouse.clientY = evt.clientY;
-
-                self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
-                self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
-
-                self._mouseEvent(self.graph._click);
-            }, false);
+            elem.addEventListener('click', handleMouseEvent(self.graph._click), false);
         }
 
         this._animate();
