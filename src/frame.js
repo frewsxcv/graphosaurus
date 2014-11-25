@@ -196,6 +196,7 @@ module.exports = (function () {
     };
 
     Frame.prototype._initMouseEvents = function (elem) {
+        var self = this;
         var createMouseHandler = function (callback) {
             var raycaster = new THREE.Raycaster();
 
@@ -208,24 +209,25 @@ module.exports = (function () {
                 // Calculate mouse position
                 var mousePosition = new THREE.Vector3(mouseX, mouseY, 0.1);
                 var radiusPosition = mousePosition.clone();
-                mousePosition.unproject(this.camera);
+                mousePosition.unproject(self.camera);
 
                 // Calculate threshold
                 var clickRadiusPx = 5;  // 5px
                 var radiusX = ((evt.clientX + clickRadiusPx) / window.innerWidth) * 2 - 1;
                 radiusPosition.setX(radiusX);
-                radiusPosition.unproject(this.camera);
+                radiusPosition.unproject(self.camera);
 
                 var clickRadius = radiusPosition.distanceTo(mousePosition);
-                var threshold = this.camera.far * clickRadius / this.camera.near;
+                var threshold = self.camera.far * clickRadius / self.camera.near;
 
                 raycaster.params.PointCloud.threshold = threshold;
 
                 // Determine intersects
-                raycaster.set(this.camera.position, mousePosition.sub(this.camera.position).normalize());
-                var intersects = raycaster.intersectObject(this.pointCloud);
+                raycaster.set(self.camera.position, mousePosition.sub(self.camera.position).normalize());
+                var intersects = raycaster.intersectObject(self.pointCloud);
                 if (intersects.length) {
-                    callback(intersects[0]);
+                    var nodeIndex = intersects[0].index;
+                    callback(self.graph._nodes[nodeIndex]);
                 }
             };
         };
