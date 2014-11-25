@@ -196,10 +196,12 @@ module.exports = (function () {
     };
 
     Frame.prototype._initMouseEvents = function (elem) {
-        var mouseHandler = (function () {
+        var createMouseHandler = function (callback) {
             var raycaster = new THREE.Raycaster();
 
-            return function (evt, callback) {
+            return function (evt) {
+                evt.preventDefault();
+
                 var mouseX = (evt.clientX / window.innerWidth) * 2 - 1;
                 var mouseY = 1 - (evt.clientY / window.innerHeight) * 2;
 
@@ -226,21 +228,14 @@ module.exports = (function () {
                     callback(intersects[0]);
                 }
             };
-        }());
-
-        var createHandler = function (handler) {
-            return function (evt) {
-                evt.preventDefault();
-                mouseHandler(handler);
-            };
         };
 
         if (this.graph._hover) {
-            elem.addEventListener('mousemove', createHandler(this.graph._hover), false);
+            elem.addEventListener('mousemove', createMouseHandler(this.graph._hover), false);
         }
 
         if (this.graph._click) {
-            elem.addEventListener('click', createHandler(this.graph._click), false);
+            elem.addEventListener('click', createMouseHandler(this.graph._click), false);
         }
     };
 
