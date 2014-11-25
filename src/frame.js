@@ -30,30 +30,7 @@ module.exports = (function () {
 
         this.positionCamera();
 
-        this.mouse = {x: 0, y: 0};
-        var self = this;
-
-        var handleMouseEvent = function (handler) {
-            return function (evt) {
-                evt.preventDefault();
-
-                self.mouse.clientX = evt.clientX;
-                self.mouse.clientY = evt.clientY;
-
-                self.mouse.x = (evt.clientX / window.innerWidth) * 2 - 1;
-                self.mouse.y = 1 - (evt.clientY / window.innerHeight) * 2;
-
-                self._mouseEvent(handler);
-            };
-        };
-
-        if (this.graph._hover) {
-            elem.addEventListener('mousemove', handleMouseEvent(self.graph._hover), false);
-        }
-
-        if (this.graph._click) {
-            elem.addEventListener('click', handleMouseEvent(self.graph._click), false);
-        }
+        this._initMouseEvents(elem);
 
         this._animate();
     };
@@ -218,34 +195,55 @@ module.exports = (function () {
         this.scene.add(this.line);
     };
 
-    Frame.prototype._mouseEvent = (function () {
-        var raycaster = new THREE.Raycaster();
+    Frame.prototype._initMouseEvents = function (elem) {
+        var mouseHandler = (function () {
+            var raycaster = new THREE.Raycaster();
 
-        return function (callback) {
-            // Calculate mouse position
-            var mousePosition = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.1);
-            var radiusPosition = mousePosition.clone();
-            mousePosition.unproject(this.camera);
+            return function (evt, callback) {
+                var mouseX = (evt.clientX / window.innerWidth) * 2 - 1;
+                var mouseY = 1 - (evt.clientY / window.innerHeight) * 2;
 
-            // Calculate threshold
-            var clickRadiusPx = 5;  // 5px
-            var radiusX = ((this.mouse.clientX + clickRadiusPx) / window.innerWidth) * 2 - 1;
-            radiusPosition.setX(radiusX);
-            radiusPosition.unproject(this.camera);
+                // Calculate mouse position
+                var mousePosition = new THREE.Vector3(mouseX, mouseY, 0.1);
+                var radiusPosition = mousePosition.clone();
+                mousePosition.unproject(this.camera);
 
-            var clickRadius = radiusPosition.distanceTo(mousePosition);
-            var threshold = this.camera.far * clickRadius / this.camera.near;
+                // Calculate threshold
+                var clickRadiusPx = 5;  // 5px
+                var radiusX = ((evt.clientX + clickRadiusPx) / window.innerWidth) * 2 - 1;
+                radiusPosition.setX(radiusX);
+                radiusPosition.unproject(this.camera);
 
-            raycaster.params.PointCloud.threshold = threshold;
+                var clickRadius = radiusPosition.distanceTo(mousePosition);
+                var threshold = this.camera.far * clickRadius / this.camera.near;
 
-            // Determine intersects
-            raycaster.set(this.camera.position, mousePosition.sub(this.camera.position).normalize());
-            var intersects = raycaster.intersectObject(this.pointCloud);
-            if (intersects.length) {
-                callback(intersects[0]);
-            }
+                raycaster.params.PointCloud.threshold = threshold;
+
+                // Determine intersects
+                raycaster.set(this.camera.position, mousePosition.sub(this.camera.position).normalize());
+                var intersects = raycaster.intersectObject(this.pointCloud);
+                if (intersects.length) {
+                    callback(intersects[0]);
+                }
+            };
+        }());
+
+        var createHandler = function (handler) {
+            return function (evt) {
+                evt.preventDefault();
+                mouseHandler(handler);
+            };
         };
-    }());
+
+        if (this.graph._hover) {
+            elem.addEventListener('mousemove', createHandler(this.graph._hover), false);
+        }
+
+        if (this.graph._click) {
+            elem.addEventListener('click', createHandler(this.graph._click), false);
+        }
+    };
+
 
     Frame.prototype._animate = function () {
         var self = this,
