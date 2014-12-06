@@ -19,6 +19,7 @@
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-contrib-uglify": "~0.6.0",
+    "nonew": "1.0.0",
     "three": "~0.69.0"
   }
 }

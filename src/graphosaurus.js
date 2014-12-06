@@ -5,19 +5,19 @@
         Node = require("./node"),
         Edge = require("./edge"),
         Graph = require("./graph"),
-        utils = require("./utils");
+        nonew = require("nonew");
 
     window.G = window.Graphosaurus = {
         Frame: Frame,
-        frame: utils.noNew(Frame),
+        frame: nonew(Frame),
 
         Node: Node,
-        node: utils.noNew(Node),
+        node: nonew(Node),
 
         Edge: Edge,
-        edge: utils.noNew(Edge),
+        edge: nonew(Edge),
 
         Graph: Graph,
-        graph: utils.noNew(Graph),
+        graph: nonew(Graph),
     };
 }());
