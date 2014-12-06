@@ -2,7 +2,7 @@ module.exports = (function () {
     "use strict";
 
     var THREE = require("three"),
-        TrackballControls = require("../lib/trackball-controls/TrackballControls");
+        TrackballControls = require("three.trackball");
 
     var Frame = function (elem, graph) {
         if (typeof elem === 'string') {

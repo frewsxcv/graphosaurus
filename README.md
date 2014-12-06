@@ -72,14 +72,6 @@ While this is an very basic example, I hope I've demonstrated how simple it is t
 
 ## Copyright
 
-* [`three.js`](https://github.com/mrdoob/three.js/)
- * Used because writing WebGL is time consuming
- * [MIT](https://github.com/mrdoob/three.js/blob/master/LICENSE)
+All files in this repository are licensed under [version two of the Mozilla Public License](https://github.com/frewsxcv/graphosaurus/blob/master/LICENSE.md).
 
-* [`TrackballControls.js`](https://github.com/mrdoob/three.js/blob/master/examples/js/controls/TrackballControls.js)
- * Used for graph controls
- * [MIT](https://github.com/mrdoob/three.js/blob/master/LICENSE)
-
-* `Graphosaurus`
- * Everything else in this repository
- * [MPL v2](https://github.com/frewsxcv/graphosaurus/blob/master/LICENSE.md)
+Graphosaurus has some third party dependencies listed in the `package.json` file in the `devDependencies` section. Their licenses can be found on their respective project pages.
