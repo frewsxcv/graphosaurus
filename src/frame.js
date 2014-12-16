@@ -241,27 +241,34 @@ module.exports = (function () {
         }
     };
 
+    Frame.prototype._updateCameraBounds = (function () {
+        var prevCameraPos;
+        return function () {
+            // TODO: this shouldn't update every frame
+            // TODO: is this still even necessary now that we scale?
+            var cameraPos = this.camera.position;
+
+            if (cameraPos === prevCameraPos) { return; }
+
+            var boundingSphere = this.points.boundingSphere;
+            var distance = boundingSphere.distanceToPoint(cameraPos);
+
+            if (distance > 0) {
+                this.camera.near = distance;
+                this.camera.far = distance + boundingSphere.radius * 2;
+                this.camera.updateProjectionMatrix();
+            }
+
+            prevCameraPos = cameraPos.clone();
+        };
+    }());
 
     Frame.prototype._animate = function () {
-        var self = this,
-            prevCameraPos;
+        var self = this;
 
         // Update near/far camera range
         (function animate() {
-            // TODO: this shouldn't update every frame
-            var cameraPos = self.camera.position;
-            if (cameraPos !== prevCameraPos) {
-                var boundingSphere = self.points.boundingSphere;
-                var distance = boundingSphere.distanceToPoint(cameraPos);
-
-                if (distance > 0) {
-                    self.camera.near = distance;
-                    self.camera.far = distance + boundingSphere.radius * 2;
-                    self.camera.updateProjectionMatrix();
-                }
-
-                prevCameraPos = cameraPos.clone();
-            }
+            self._updateCameraBounds();
 
             window.requestAnimationFrame(animate);
             self.controls.update();
