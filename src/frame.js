@@ -89,7 +89,8 @@ module.exports = (function () {
         this.points.computeBoundingSphere();
         var sphere = this.points.boundingSphere;
 
-        var optimalDistance = sphere.radius * 1.5 / Math.tan(this.graph._fov / 2);
+        var optimalDistance = (
+            sphere.radius * 1.5 / Math.tan(this.graph._fov / 2));
 
         this.camera.position.x = sphere.center.x + optimalDistance;
         this.camera.position.y = sphere.center.y;
@@ -218,7 +219,8 @@ module.exports = (function () {
                 radiusPosition.unproject(self.camera);
 
                 var clickRadius = radiusPosition.distanceTo(mousePosition);
-                var threshold = self.camera.far * clickRadius / self.camera.near;
+                var threshold = (
+                    self.camera.far * clickRadius / self.camera.near);
 
                 raycaster.params.PointCloud.threshold = threshold;
 
