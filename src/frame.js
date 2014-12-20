@@ -235,7 +235,8 @@ module.exports = (function () {
         };
 
         if (this.graph._hover) {
-            elem.addEventListener('mousemove', createMouseHandler(this.graph._hover), false);
+            elem.addEventListener(
+                'mousemove', createMouseHandler(this.graph._hover), false);
         }
 
         if (this.graph._click) {
