@@ -225,7 +225,9 @@ module.exports = (function () {
                 raycaster.params.PointCloud.threshold = threshold;
 
                 // Determine intersects
-                raycaster.set(self.camera.position, mousePosition.sub(self.camera.position).normalize());
+                var mouseDirection = (
+                    mousePosition.sub(self.camera.position).normalize());
+                raycaster.set(self.camera.position, mouseDirection);
                 var intersects = raycaster.intersectObject(self.pointCloud);
                 if (intersects.length) {
                     var nodeIndex = intersects[0].index;
@@ -240,7 +242,8 @@ module.exports = (function () {
         }
 
         if (this.graph._click) {
-            elem.addEventListener('click', createMouseHandler(this.graph._click), false);
+            elem.addEventListener(
+                'click', createMouseHandler(this.graph._click), false);
         }
     };
 
