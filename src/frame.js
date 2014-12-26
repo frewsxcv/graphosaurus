@@ -118,26 +118,21 @@ module.exports = (function () {
             material.map = texture;
         }
 
-        var positions = new Float32Array(nodes.length * 3);
-        var colors = new Float32Array(nodes.length * 3);
+        var positions = new THREE.BufferAttribute(
+            new Float32Array(nodes.length * 3), 3);
+        var colors = new THREE.BufferAttribute(
+            new Float32Array(nodes.length * 3), 3);
         for (var i = 0; i < nodes.length; i++) {
             var node = nodes[i];
             var pos = node._pos;
             var color = node._color;
 
-            positions[3 * i] = pos.x;
-            positions[3 * i + 1] = pos.y;
-            positions[3 * i + 2] = pos.z;
-
-            colors[3 * i] = color.r;
-            colors[3 * i + 1] = color.g;
-            colors[3 * i + 2] = color.b;
+            positions.setXYZ(i, pos.x, pos.y, pos.z);
+            colors.setXYZ(i, color.r, color.g, color.b);
         }
         this.points = new THREE.BufferGeometry();
-        this.points.addAttribute(
-            'position', new THREE.BufferAttribute(positions, 3));
-        this.points.addAttribute(
-            'color', new THREE.BufferAttribute(colors, 3));
+        this.points.addAttribute('position', positions);
+        this.points.addAttribute('color', colors);
 
         this.pointCloud = new THREE.PointCloud(this.points, material);
 
