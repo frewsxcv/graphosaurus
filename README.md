@@ -4,6 +4,10 @@
 
 A three-dimensional static graph viewer.
 
+## Documentation
+
+JSDoc generated API documentation can be found [here](https://cdn.rawgit.com/frewsxcv/graphosaurus/master/doc/index.html).
+
 ## Twenty second tutorial
 
 ```html
