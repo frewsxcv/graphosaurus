@@ -14,11 +14,11 @@
   "homepage": "https://github.com/frewsxcv/graphosaurus",
   "devDependencies": {
     "grunt": "~0.4.5",
-    "grunt-browserify": "~3.2.0",
+    "grunt-browserify": "~3.2.1",
     "grunt-jsdoc": "~0.5.7",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-watch": "~0.6.1",
-    "grunt-contrib-uglify": "~0.6.0",
+    "grunt-contrib-uglify": "~0.7.0",
     "nonew": "1.0.0",
     "three": "~0.69.0",
     "three.trackball": "0.0.1"
