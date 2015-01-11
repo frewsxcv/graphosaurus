@@ -4,6 +4,8 @@
 
 A three-dimensional static graph viewer.
 
+![http://froosky.rwell.org/graphosaurus/examples/eve/](https://i.imgur.com/1DHZvaC.gif)
+
 ## Documentation
 
 JSDoc generated API documentation can be found [here](https://cdn.rawgit.com/frewsxcv/graphosaurus/master/doc/index.html).
