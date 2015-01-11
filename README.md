@@ -4,7 +4,7 @@
 
 A three-dimensional static graph viewer.
 
-![http://froosky.rwell.org/graphosaurus/examples/eve/](https://i.imgur.com/1DHZvaC.gif)
+[![](https://i.imgur.com/1DHZvaC.gif)](http://froosky.rwell.org/graphosaurus/examples/eve/)
 
 ## Documentation
 
