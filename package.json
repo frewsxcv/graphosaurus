@@ -6,8 +6,8 @@
     "type": "git",
     "url": "git://github.com/frewsxcv/graphosaurus.git"
   },
-  "author": "",
-  "license": "MPL version 2",
+  "author": "Corey Farwell <coreyf@rwell.org>",
+  "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/frewsxcv/graphosaurus/issues"
   },
