@@ -2,7 +2,8 @@ module.exports = (function () {
     "use strict";
 
     var THREE = require("three"),
-        TrackballControls = require("three.trackball");
+        TrackballControls = require("three.trackball"),
+        BufferGeometrySorter = require("three-buffergeometry-sort");
 
     var Frame = function (elem, graph) {
         if (typeof elem === 'string') {
@@ -264,66 +265,14 @@ module.exports = (function () {
         };
     }());
 
-    Frame.prototype._sortNodes = (function () {
-        // Most of this logic is taken from:
-        // http://stackoverflow.com/a/18901830
-
-        var distances = [],
-            tmpPos = new THREE.Vector3(0, 0, 0),
-            frameSkip = 5,
-            currFrame = 0;
-
-        return function () {
-            currFrame += 1;
-            if (currFrame < frameSkip) {
-                return;
-            }
-            currFrame = 0;
-
-            var attributes = this.points.attributes,
-                numPoints = attributes.position.length / 3;
-
-            for (var i = 0; i < numPoints; ++i) {
-                tmpPos.set(
-                    attributes.position.array[i * 3],
-                    attributes.position.array[i * 3 + 1],
-                    attributes.position.array[i * 3 + 2]
-                );
-                distances[i] = [
-                    this.controls.object.position.distanceTo(tmpPos), i];
-            }
-            distances.sort(function(a, b) {
-                return b[0] - a[0];
-            });
-
-            for (var val in attributes) {
-                if (!attributes.hasOwnProperty(val)) { continue; }
-
-                var itemSize = attributes[val].itemSize;
-                var newArray = new Float32Array(itemSize * numPoints);
-
-                for (i = 0; i < numPoints; ++i){
-                    var index = distances[i][1];
-                    for (var j = 0; j < itemSize; ++j) {
-                        var srcIndex = index * itemSize + j;
-                        var dstIndex = i * itemSize + j;
-                        newArray[dstIndex] = attributes[val].array[srcIndex];
-                    }
-                }
-
-                attributes[val].array = newArray;
-                attributes[val].needsUpdate = true;
-            }
-        };
-    }());
-
     Frame.prototype._animate = function () {
-        var self = this;
+        var self = this,
+            sorter = new BufferGeometrySorter(5);
 
         // Update near/far camera range
         (function animate() {
             self._updateCameraBounds();
-            self._sortNodes();
+            sorter.sort(self.points.attributes, self.controls.object.position);
 
             window.requestAnimationFrame(animate);
             self.controls.update();
