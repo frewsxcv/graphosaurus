@@ -9,6 +9,25 @@
       bottom: 0;
       left: 0;
       right: 0;
+      z-index: 0;
+    }
+
+    #label {
+      position: absolute;
+      top: 15;
+      left: 15;
+      z-index: 1;
+      color: white;
+      font-family: sans-serif;
+    }
+
+    #title {
+      position: absolute;
+      top: 15;
+      right: 15;
+      z-index: 1;
+      color: white;
+      font-family: sans-serif;
     }
   </style>
 </head>
@@ -16,7 +35,11 @@
 
 <div id="frame"></div>
 
+<div id="label"></div>
+<div id="title">Eve Online Universe</div>
+
 <script src="../../dist/graphosaurus.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="eve-data.js"></script>
 <script>
 var securityColor = function (security) {
@@ -47,6 +70,8 @@ graph = G.graph({
   antialias: true,
   bgColor: "black",
   edgeWidth: 1.5,
+  nodeSize: 6,
+  hover: function (node) { $("#label").text("Solar system: " + node.name); },
 });
 
 for (var i = 0; i < eve.systems.length; i++) {
@@ -55,10 +80,12 @@ for (var i = 0; i < eve.systems.length; i++) {
   var coords = system.slice(3,6);
   var security = system[1];
 
-  G.node(coords, {
+  var node = G.node(coords, {
     id: systemId,
     color: securityColor(security),
-  }).addTo(graph);
+  });
+  node.name = system[2];
+  node.addTo(graph);
 }
 
 for (var i = 0; i < eve.relations.length; i++) {
