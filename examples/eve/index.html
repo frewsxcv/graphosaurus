@@ -52,8 +52,8 @@ graph = G.graph({
 for (var i = 0; i < eve.systems.length; i++) {
   var system = eve.systems[i];
   var systemId = system[0];
-  var coords = system.slice(1,4);
-  var security = system[4];
+  var coords = system.slice(3,6);
+  var security = system[1];
 
   G.node(coords, {
     id: systemId,
