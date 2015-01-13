@@ -80,4 +80,4 @@ While this is an very basic example, I hope I've demonstrated how simple it is t
 
 All files in this repository are licensed under [version two of the Mozilla Public License](https://github.com/frewsxcv/graphosaurus/blob/master/LICENSE.md).
 
-Graphosaurus has some third party dependencies listed in the `package.json` file in the `devDependencies` section. Their licenses can be found on their respective project pages.
+Graphosaurus has some third party dependencies listed in the `package.json` file in the `devDependencies` and `dependencies` sections. Their licenses can be found on their respective project pages.
