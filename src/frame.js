@@ -164,29 +164,42 @@ module.exports = (function () {
             transparent: this.graph._edgeOpacity < 1,
         });
 
-        var positions = new Float32Array(edges.length * 6);
-        var colors = new Float32Array(edges.length * 6);
+        var positions = new THREE.BufferAttribute(
+            new Float32Array(edges.length * 6), 3);
+        var colors = new THREE.BufferAttribute(
+            new Float32Array(edges.length * 6), 3);
+
         for (var i = 0; i < edges.length; i++) {
             var nodes = edges[i].getNodes();
 
-            positions[3 * i] =     this.scale * nodes[0]._pos.x;
-            positions[3 * i + 1] = this.scale * nodes[0]._pos.y;
-            positions[3 * i + 2] = this.scale * nodes[0]._pos.z;
+            positions.setXYZ(
+                i,
+                this.scale * nodes[0]._pos.x,
+                this.scale * nodes[0]._pos.y,
+                this.scale * nodes[0]._pos.z);
 
-            positions[3 * i + 3] = this.scale * nodes[1]._pos.x;
-            positions[3 * i + 4] = this.scale * nodes[1]._pos.y;
-            positions[3 * i + 5] = this.scale * nodes[1]._pos.z;
+            positions.setXYZ(
+                i + 1,
+                this.scale * nodes[1]._pos.x,
+                this.scale * nodes[1]._pos.y,
+                this.scale * nodes[1]._pos.z);
 
-            colors[3 * i] = colors[3 * i + 3] = edges[i]._color.r;
-            colors[3 * i + 1] = colors[3 * i + 4] = edges[i]._color.g;
-            colors[3 * i + 2] = colors[3 * i + 5] = edges[i]._color.b;
+            colors.setXYZ(
+                i,
+                edges[i]._color.r,
+                edges[i]._color.g,
+                edges[i]._color.b);
+
+            colors.setXYZ(
+                i + 1,
+                edges[i]._color.r,
+                edges[i]._color.g,
+                edges[i]._color.b);
         }
 
         this.edges = new THREE.BufferGeometry();
-        this.edges.addAttribute(
-            'position', new THREE.BufferAttribute(positions, 3));
-        this.edges.addAttribute(
-            'color', new THREE.BufferAttribute(colors, 3));
+        this.edges.addAttribute('position', positions);
+        this.edges.addAttribute('color', colors);
 
         this.line = new THREE.Line(this.edges, material, THREE.LinePieces);
         this.scene.add(this.line);
