@@ -61,7 +61,7 @@ After inserting this JavaScript in the `<script>` block, you should see this:
 
 ![](https://i.imgur.com/0ylXUd6.gif)
 
-While this is an very basic example, I hope I've demonstrated how simple it is to create graphs with Graphosaurus.
+While this is a very basic example, I hope I've demonstrated how simple it is to create graphs with Graphosaurus.
 
 ## Build
 
