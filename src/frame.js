@@ -170,7 +170,8 @@ module.exports = (function () {
             new Float32Array(edges.length * 6), 3);
 
         for (var i = 0; i < edges.length; i += 2) {
-            var nodes = edges[i].getNodes();
+            var edge = edges[i];
+            var nodes = edge.getNodes();
 
             positions.setXYZ(
                 i,
@@ -186,15 +187,15 @@ module.exports = (function () {
 
             colors.setXYZ(
                 i,
-                edges[i]._color.r,
-                edges[i]._color.g,
-                edges[i]._color.b);
+                edge._color.r,
+                edge._color.g,
+                edge._color.b);
 
             colors.setXYZ(
                 i + 1,
-                edges[i]._color.r,
-                edges[i]._color.g,
-                edges[i]._color.b);
+                edge._color.r,
+                edge._color.g,
+                edge._color.b);
         }
 
         this.edges = new THREE.BufferGeometry();
