@@ -36129,30 +36129,30 @@ module.exports = (function () {
         var colors = new THREE.BufferAttribute(
             new Float32Array(edges.length * 6), 3);
 
-        for (var i = 0; i < edges.length; i += 2) {
+        for (var i = 0; i < edges.length; i++) {
             var edge = edges[i];
             var nodes = edge.getNodes();
 
             positions.setXYZ(
-                i,
+                2 * i,
                 this.scale * nodes[0]._pos.x,
                 this.scale * nodes[0]._pos.y,
                 this.scale * nodes[0]._pos.z);
 
             positions.setXYZ(
-                i + 1,
+                2 * i + 1,
                 this.scale * nodes[1]._pos.x,
                 this.scale * nodes[1]._pos.y,
                 this.scale * nodes[1]._pos.z);
 
             colors.setXYZ(
-                i,
+                2 * i,
                 edge._color.r,
                 edge._color.g,
                 edge._color.b);
 
             colors.setXYZ(
-                i + 1,
+                2 * i + 1,
                 edge._color.r,
                 edge._color.g,
                 edge._color.b);
