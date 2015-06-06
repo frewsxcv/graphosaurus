@@ -158,7 +158,7 @@ module.exports = (function () {
 
     Frame.prototype._initEdges = function (edges) {
         var material = new THREE.LineBasicMaterial({
-            vertexColors: true,
+            vertexColors: THREE.VertexColors,
             linewidth: this.graph._edgeWidth,
             opacity: this.graph._edgeOpacity,
             transparent: this.graph._edgeOpacity < 1,
