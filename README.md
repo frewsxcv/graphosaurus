@@ -1,6 +1,7 @@
 # Graphosaurus
 
 [![Build Status](https://travis-ci.org/frewsxcv/graphosaurus.svg)](https://travis-ci.org/frewsxcv/graphosaurus)
+[![npm version](https://badge.fury.io/js/graphosaurus.svg)](http://badge.fury.io/js/graphosaurus)
 
 A three-dimensional static graph viewer.
 
