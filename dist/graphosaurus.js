@@ -36356,7 +36356,7 @@ module.exports = (function () {
      * Replace string IDs representing Nodes in Edges with Node references
      * @private
      *
-     * @param {Edge} edge - Edge that
+     * @param {Edge} edge - Edge that has string IDs for its Node values
      * @returns {undefined}
      */
     Graph.prototype._resolveEdgeIds = function (edge) {
