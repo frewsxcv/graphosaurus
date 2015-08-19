@@ -1,0 +1,51 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Graphosaurus demo: Incremental</title>
+  <style>
+    #frame {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="frame"></div>
+
+<script src="../../dist/graphosaurus.js"></script>
+<script>
+var nodes = [];
+
+graph = G.graph({
+  nodeImage: "../_common/disc.png",
+  nodeImageTransparent: true,
+  antialias: true,
+  bgColor: 0xEEEEEE,
+  edgeWidth: 1.5,
+  nodeSize: 20,
+});
+
+graph.renderIn('frame');
+
+window.setInterval(function () {
+  var node = G.node(randomPosition(), {color: 0x444444});
+  if (nodes.length > 0) {
+    var randomIndex = Math.floor(Math.random() * nodes.length);
+    var otherNode = nodes[randomIndex];
+    G.edge([node, otherNode], {color: 0x222222}).addTo(graph);
+  }
+  nodes.push(node);
+  node.addTo(graph);
+}, 1000);
+
+function randomPosition() {
+  return [Math.random(), Math.random(), Math.random()];
+}
+</script>
+</body>
+</html>
