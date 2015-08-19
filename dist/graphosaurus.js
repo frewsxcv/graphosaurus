@@ -35982,9 +35982,12 @@ module.exports = (function () {
 
         this._initScene();
         this._initRenderer(width, height, elem);
-        this._initNodes(graph.getNodes());
+        this._initNodes();
+        this._initEdges();
+
+        this._updateNodesData(graph.getNodes());
         this._normalizeNodes();
-        this._initEdges(graph.getEdges());
+        this._updateEdgesData(graph.getEdges());
 
         this._initCamera(aspectRatio);
         this._initControls(elem);
@@ -36060,7 +36063,7 @@ module.exports = (function () {
         this.controls.target = sphere.center.clone();
     };
 
-    Frame.prototype._initNodes = function (nodes) {
+    Frame.prototype._initNodes = function () {
         var self = this;
 
         var material = new THREE.PointCloudMaterial({
@@ -36079,6 +36082,18 @@ module.exports = (function () {
             material.map = texture;
         }
 
+        this.points = new THREE.BufferGeometry();
+        this.pointCloud = new THREE.PointCloud(this.points, material);
+
+        if (this.graph._nodeImageTransparent === true) {
+            material.transparent = true;
+            this.pointCloud.sortParticles = true;
+        }
+
+        this.scene.add(this.pointCloud);
+    };
+
+    Frame.prototype._updateNodesData = function (nodes) {
         var positions = new THREE.BufferAttribute(
             new Float32Array(nodes.length * 3), 3);
         var colors = new THREE.BufferAttribute(
@@ -36091,18 +36106,8 @@ module.exports = (function () {
             positions.setXYZ(i, pos.x, pos.y, pos.z);
             colors.setXYZ(i, color.r, color.g, color.b);
         }
-        this.points = new THREE.BufferGeometry();
         this.points.addAttribute('position', positions);
         this.points.addAttribute('color', colors);
-
-        this.pointCloud = new THREE.PointCloud(this.points, material);
-
-        if (this.graph._nodeImageTransparent === true) {
-            material.transparent = true;
-            this.pointCloud.sortParticles = true;
-        }
-
-        this.scene.add(this.pointCloud);
     };
 
     Frame.prototype._normalizeNodes = function () {
@@ -36116,7 +36121,7 @@ module.exports = (function () {
         }
     };
 
-    Frame.prototype._initEdges = function (edges) {
+    Frame.prototype._initEdges = function () {
         var material = new THREE.LineBasicMaterial({
             vertexColors: THREE.VertexColors,
             linewidth: this.graph._edgeWidth,
@@ -36124,6 +36129,12 @@ module.exports = (function () {
             transparent: this.graph._edgeOpacity < 1,
         });
 
+        this.edges = new THREE.BufferGeometry();
+        this.line = new THREE.Line(this.edges, material, THREE.LinePieces);
+        this.scene.add(this.line);
+    };
+
+    Frame.prototype._updateEdgesData = function (edges) {
         var positions = new THREE.BufferAttribute(
             new Float32Array(edges.length * 6), 3);
         var colors = new THREE.BufferAttribute(
@@ -36158,12 +36169,8 @@ module.exports = (function () {
                 edge._color.b);
         }
 
-        this.edges = new THREE.BufferGeometry();
         this.edges.addAttribute('position', positions);
         this.edges.addAttribute('color', colors);
-
-        this.line = new THREE.Line(this.edges, material, THREE.LinePieces);
-        this.scene.add(this.line);
     };
 
     Frame.prototype._initMouseEvents = function (elem) {
