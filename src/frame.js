@@ -10,31 +10,27 @@ module.exports = (function () {
             elem = document.getElementById(elem);
         }
 
-        if (graph._nodes.length < 2) {
-            throw "A graph needs at least two nodes";
-        }
-
         this.graph = graph;
+        this.nodesHaveBeenNormalized = false;
+        this.hasCameraBeenPositioned = false;
 
         var width = elem.scrollWidth;
         var height = elem.scrollHeight;
         var aspectRatio = width/height;
+
+        this.scale = 1;
 
         this._initScene();
         this._initRenderer(width, height, elem);
         this._initNodes();
         this._initEdges();
 
-        this._updateNodesData(graph.getNodes());
-        this._normalizeNodes();
-        this._updateEdgesData(graph.getEdges());
-
         this._initCamera(aspectRatio);
         this._initControls(elem);
 
-        this.positionCamera();
-
         this._initMouseEvents(elem);
+
+        this.syncDataFromGraph();
 
         this._animate();
     };
@@ -88,7 +84,18 @@ module.exports = (function () {
         this.controls = controls;
     };
 
+    Frame.prototype._numNodes = function () {
+        var bufferAttr = this.points.getAttribute('position');
+        return bufferAttr.length / bufferAttr.itemSize;
+    };
+
     Frame.prototype.positionCamera = function () {
+        if (this.hasCameraBeenPositioned || this._numNodes() < 2) {
+          return;
+        }
+
+        this.hasCameraBeenPositioned = true;
+
         // Calculate optimal camera position
         this.points.computeBoundingSphere();
         var sphere = this.points.boundingSphere;
@@ -133,7 +140,14 @@ module.exports = (function () {
         this.scene.add(this.pointCloud);
     };
 
-    Frame.prototype._updateNodesData = function (nodes) {
+    Frame.prototype.syncDataFromGraph = function () {
+        this._syncNodeDataFromGraph();
+        this._syncEdgeDataFromGraph();
+    };
+
+    Frame.prototype._syncNodeDataFromGraph = function () {
+        var nodes = this.graph.getNodes();
+
         var positions = new THREE.BufferAttribute(
             new Float32Array(nodes.length * 3), 3);
         var colors = new THREE.BufferAttribute(
@@ -143,21 +157,37 @@ module.exports = (function () {
             var pos = node._pos;
             var color = node._color;
 
-            positions.setXYZ(i, pos.x, pos.y, pos.z);
+            positions.setXYZ(i, this.scale * pos.x, this.scale * pos.y, this.scale * pos.z);
             colors.setXYZ(i, color.r, color.g, color.b);
         }
         this.points.addAttribute('position', positions);
         this.points.addAttribute('color', colors);
+
+        this.points.computeBoundingSphere();
+
+        this._normalizePositions();
+        this.positionCamera();
     };
 
-    Frame.prototype._normalizeNodes = function () {
-        this.points.computeBoundingSphere();
+    Frame.prototype._normalizePositions = function () {
+        if (this.nodesHaveBeenNormalized || this._numNodes() < 2) {
+          return;
+        }
+
+        this.nodesHaveBeenNormalized = true;
 
         this.scale = 1 / this.points.boundingSphere.radius;
         var positions = this.points.attributes.position.array;
 
         for (var i = 0; i < positions.length; i++) {
             positions[i] *= this.scale;
+        }
+
+        if (this.edges.attributes.position) {
+          positions = this.edges.attributes.position.array;
+          for (i = 0; i < positions.length; i++) {
+              positions[i] *= this.scale;
+          }
         }
     };
 
@@ -174,7 +204,9 @@ module.exports = (function () {
         this.scene.add(this.line);
     };
 
-    Frame.prototype._updateEdgesData = function (edges) {
+    Frame.prototype._syncEdgeDataFromGraph = function () {
+        var edges = this.graph.getEdges();
+
         var positions = new THREE.BufferAttribute(
             new Float32Array(edges.length * 6), 3);
         var colors = new THREE.BufferAttribute(

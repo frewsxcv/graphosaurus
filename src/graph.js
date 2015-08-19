@@ -26,6 +26,7 @@ module.exports = (function () {
         this._nodeIds = {};
         this._nodes = [];
         this._edges = [];
+        this._frames = [];
         this._initProps(props);
     };
 
@@ -67,6 +68,7 @@ module.exports = (function () {
         }
 
         this._nodes.push(node);
+        this.syncDataToFrames();
 
         return this;
     };
@@ -89,6 +91,7 @@ module.exports = (function () {
     Graph.prototype.addEdge = function (edge) {
         this._resolveEdgeIds(edge);
         this._edges.push(edge);
+        this.syncDataToFrames();
 
         return this;
     };
@@ -129,7 +132,19 @@ module.exports = (function () {
      * @returns {Graph} The Graph the method was called on
      */
     Graph.prototype.renderIn = function (elem) {
-        return new Frame(elem, this);
+        var frame = new Frame(elem, this);
+        this._frames.push(frame);
+        return frame;
+    };
+
+    Graph.prototype.syncDataToFrames = function () {
+        // TODO: instead of this method, nodes/edges should send an Event to the
+        // Graph, which sends the Event to the Frame informing there has been
+        // a changed and it needs to be rerendered
+        this._frames.forEach(function (frame) {
+            frame.syncDataFromGraph();
+            frame.forceRerender();
+        });
     };
 
     return Graph;
