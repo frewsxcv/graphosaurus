@@ -7,6 +7,11 @@ A three-dimensional static graph viewer.
 
 [![](https://i.imgur.com/1DHZvaC.gif)](https://cdn.rawgit.com/frewsxcv/graphosaurus/master/examples/eve-universe/index.html)
 
+## Demos
+
+* [EVE Online map](https://cdn.rawgit.com/frewsxcv/graphosaurus/master/examples/eve-universe/index.html)
+* [Add nodes incrementally](https://cdn.rawgit.com/frewsxcv/graphosaurus/master/examples/incremental/index.html)
+
 ## Documentation
 
 JSDoc generated API documentation can be found [here](https://cdn.rawgit.com/frewsxcv/graphosaurus/master/doc/index.html).
