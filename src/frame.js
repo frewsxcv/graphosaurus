@@ -146,7 +146,7 @@ module.exports = (function () {
     };
 
     Frame.prototype._syncNodeDataFromGraph = function () {
-        var nodes = this.graph.getNodes();
+        var nodes = this.graph.nodes();
 
         var positions = new THREE.BufferAttribute(
             new Float32Array(nodes.length * 3), 3);
@@ -205,7 +205,7 @@ module.exports = (function () {
     };
 
     Frame.prototype._syncEdgeDataFromGraph = function () {
-        var edges = this.graph.getEdges();
+        var edges = this.graph.edges();
 
         var positions = new THREE.BufferAttribute(
             new Float32Array(edges.length * 6), 3);
@@ -214,7 +214,7 @@ module.exports = (function () {
 
         for (var i = 0; i < edges.length; i++) {
             var edge = edges[i];
-            var nodes = edge.getNodes();
+            var nodes = edge.nodes();
 
             positions.setXYZ(
                 2 * i,

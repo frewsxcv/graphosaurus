@@ -42,7 +42,7 @@ module.exports = (function () {
      *
      * @returns {String|Number|null} ID of the Node
      */
-    Node.prototype.getId = function () {
+    Node.prototype.id = function () {
         return this._id;
     };
 
@@ -68,9 +68,9 @@ module.exports = (function () {
      *
      * @example
      * var x = 14, y = 20, z = -5;
-     * myNode.getPos([x, y, z]);
+     * myNode.pos([x, y, z]);
      */
-    Node.prototype.getPos = function () {
+    Node.prototype.pos = function () {
         return this._pos.toArray();
     };
 
@@ -92,7 +92,7 @@ module.exports = (function () {
      *
      * @returns {String} String hexadecimal representation of the Edge's color
      */
-    Node.prototype.getColor = function () {
+    Node.prototype.color = function () {
         return this._color.getHexString();
     };
 

@@ -49,7 +49,7 @@ module.exports = (function () {
      *
      * @returns {Array} Array of two Nodes that represent the ends of the Edge
      */
-    Edge.prototype.getNodes = function () {
+    Edge.prototype.nodes = function () {
         // TODO: should this do this._nodes.clone(); ?
         return this._nodes;
     };
@@ -84,9 +84,9 @@ module.exports = (function () {
      *
      * @example
      * myEdge.setColor("green");
-     * myEdge.getColor();  // returns "008000"
+     * myEdge.color();  // returns "008000"
      */
-    Edge.prototype.getColor = function () {
+    Edge.prototype.color = function () {
         return this._color.getHexString();
     };
 

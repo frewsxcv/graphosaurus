@@ -73,15 +73,15 @@ module.exports = (function () {
         return this;
     };
 
-    Graph.prototype.getNode = function (id) {
+    Graph.prototype.node = function (id) {
         return this._nodeIds[id];
     };
 
-    Graph.prototype.getNodes = function () {
+    Graph.prototype.nodes = function () {
         return this._nodes;
     };
 
-    Graph.prototype.getEdges = function () {
+    Graph.prototype.edges = function () {
         return this._edges;
     };
 
@@ -104,11 +104,11 @@ module.exports = (function () {
      * @returns {undefined}
      */
     Graph.prototype._resolveEdgeIds = function (edge) {
-        var node, nodes = edge.getNodes(), type;
+        var node, nodes = edge.nodes(), type;
 
         type = typeof nodes[0];
         if (type === "string" || type === "number") {
-            node = this.getNode(nodes[0]);
+            node = this.node(nodes[0]);
             if (node === undefined) {
                 throw "Could not resolve id=" + nodes[0];
             }
@@ -117,7 +117,7 @@ module.exports = (function () {
 
         type = typeof nodes[1];
         if (type === "string" || type === "number") {
-            node = this.getNode(nodes[1]);
+            node = this.node(nodes[1]);
             if (node === undefined) {
                 throw "Could not resolve id=" + nodes[1];
             }

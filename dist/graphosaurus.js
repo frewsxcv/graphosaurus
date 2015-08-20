@@ -35902,7 +35902,7 @@ module.exports = (function () {
      *
      * @returns {Array} Array of two Nodes that represent the ends of the Edge
      */
-    Edge.prototype.getNodes = function () {
+    Edge.prototype.nodes = function () {
         // TODO: should this do this._nodes.clone(); ?
         return this._nodes;
     };
@@ -35937,9 +35937,9 @@ module.exports = (function () {
      *
      * @example
      * myEdge.setColor("green");
-     * myEdge.getColor();  // returns "008000"
+     * myEdge.color();  // returns "008000"
      */
-    Edge.prototype.getColor = function () {
+    Edge.prototype.color = function () {
         return this._color.getHexString();
     };
 
@@ -36106,7 +36106,7 @@ module.exports = (function () {
     };
 
     Frame.prototype._syncNodeDataFromGraph = function () {
-        var nodes = this.graph.getNodes();
+        var nodes = this.graph.nodes();
 
         var positions = new THREE.BufferAttribute(
             new Float32Array(nodes.length * 3), 3);
@@ -36165,7 +36165,7 @@ module.exports = (function () {
     };
 
     Frame.prototype._syncEdgeDataFromGraph = function () {
-        var edges = this.graph.getEdges();
+        var edges = this.graph.edges();
 
         var positions = new THREE.BufferAttribute(
             new Float32Array(edges.length * 6), 3);
@@ -36174,7 +36174,7 @@ module.exports = (function () {
 
         for (var i = 0; i < edges.length; i++) {
             var edge = edges[i];
-            var nodes = edge.getNodes();
+            var nodes = edge.nodes();
 
             positions.setXYZ(
                 2 * i,
@@ -36371,15 +36371,15 @@ module.exports = (function () {
         return this;
     };
 
-    Graph.prototype.getNode = function (id) {
+    Graph.prototype.node = function (id) {
         return this._nodeIds[id];
     };
 
-    Graph.prototype.getNodes = function () {
+    Graph.prototype.nodes = function () {
         return this._nodes;
     };
 
-    Graph.prototype.getEdges = function () {
+    Graph.prototype.edges = function () {
         return this._edges;
     };
 
@@ -36402,11 +36402,11 @@ module.exports = (function () {
      * @returns {undefined}
      */
     Graph.prototype._resolveEdgeIds = function (edge) {
-        var node, nodes = edge.getNodes(), type;
+        var node, nodes = edge.nodes(), type;
 
         type = typeof nodes[0];
         if (type === "string" || type === "number") {
-            node = this.getNode(nodes[0]);
+            node = this.node(nodes[0]);
             if (node === undefined) {
                 throw "Could not resolve id=" + nodes[0];
             }
@@ -36415,7 +36415,7 @@ module.exports = (function () {
 
         type = typeof nodes[1];
         if (type === "string" || type === "number") {
-            node = this.getNode(nodes[1]);
+            node = this.node(nodes[1]);
             if (node === undefined) {
                 throw "Could not resolve id=" + nodes[1];
             }
@@ -36518,7 +36518,7 @@ module.exports = (function () {
      *
      * @returns {String|Number|null} ID of the Node
      */
-    Node.prototype.getId = function () {
+    Node.prototype.id = function () {
         return this._id;
     };
 
@@ -36544,9 +36544,9 @@ module.exports = (function () {
      *
      * @example
      * var x = 14, y = 20, z = -5;
-     * myNode.getPos([x, y, z]);
+     * myNode.pos([x, y, z]);
      */
-    Node.prototype.getPos = function () {
+    Node.prototype.pos = function () {
         return this._pos.toArray();
     };
 
@@ -36568,7 +36568,7 @@ module.exports = (function () {
      *
      * @returns {String} String hexadecimal representation of the Edge's color
      */
-    Node.prototype.getColor = function () {
+    Node.prototype.color = function () {
         return this._color.getHexString();
     };
 
