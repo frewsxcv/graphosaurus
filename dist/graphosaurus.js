@@ -36544,7 +36544,7 @@ module.exports = (function () {
      *
      * @example
      * var x = 14, y = 20, z = -5;
-     * myNode.pos([x, y, z]);
+     * myNode.pos() === [14, 20, -5];
      */
     Node.prototype.pos = function () {
         return this._pos.toArray();
