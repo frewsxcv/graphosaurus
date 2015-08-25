@@ -61,7 +61,7 @@ module.exports = (function () {
     };
 
     Graph.prototype.addNode = function (node) {
-        var id = node.getId();
+        var id = node.id();
 
         if (id !== undefined) {
             this._nodeIds[id] = node;
