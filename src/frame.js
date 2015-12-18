@@ -86,7 +86,7 @@ module.exports = (function () {
 
     Frame.prototype._numNodes = function () {
         var bufferAttr = this.points.getAttribute('position');
-        return bufferAttr.length / bufferAttr.itemSize;
+        return bufferAttr.count / bufferAttr.itemSize;
     };
 
     Frame.prototype.positionCamera = function () {
@@ -113,7 +113,7 @@ module.exports = (function () {
     Frame.prototype._initNodes = function () {
         var self = this;
 
-        var material = new THREE.PointCloudMaterial({
+        var material = new THREE.PointsMaterial({
             size: this.graph._nodeSize,
             vertexColors: true,
             sizeAttenuation: this.graph._sizeAttenuation,
@@ -121,8 +121,8 @@ module.exports = (function () {
         });
 
         if (this.graph._nodeImage !== undefined) {
-            var texture = THREE.ImageUtils.loadTexture(
-                this.graph._nodeImage, undefined, function () {
+            var texture = (new THREE.TextureLoader()).load(
+                this.graph._nodeImage, function () {
                     // Force a rerender after node image has finished loading
                     self.forceRerender();
                 });
@@ -130,7 +130,7 @@ module.exports = (function () {
         }
 
         this.points = new THREE.BufferGeometry();
-        this.pointCloud = new THREE.PointCloud(this.points, material);
+        this.pointCloud = new THREE.Points(this.points, material);
 
         if (this.graph._nodeImageTransparent === true) {
             material.transparent = true;
@@ -200,7 +200,7 @@ module.exports = (function () {
         });
 
         this.edges = new THREE.BufferGeometry();
-        this.line = new THREE.Line(this.edges, material, THREE.LinePieces);
+        this.line = new THREE.Line(this.edges, material, THREE.LineSegments);
         this.scene.add(this.line);
     };
 
@@ -271,7 +271,7 @@ module.exports = (function () {
                 var threshold = (
                     self.camera.far * clickRadius / self.camera.near);
 
-                raycaster.params.PointCloud.threshold = threshold;
+                raycaster.params.Points.threshold = threshold;
 
                 // Determine intersects
                 var mouseDirection = (
