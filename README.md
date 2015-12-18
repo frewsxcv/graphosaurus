@@ -5,12 +5,12 @@
 
 A three-dimensional static graph viewer.
 
-[![](https://i.imgur.com/1DHZvaC.gif)](https://cdn.rawgit.com/frewsxcv/graphosaurus/0.5.0/examples/eve-universe/index.html)
+[![](https://i.imgur.com/1DHZvaC.gif)](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/eve-universe/index.html)
 
 ## Demos
 
-* [EVE Online map](https://cdn.rawgit.com/frewsxcv/graphosaurus/0.5.0/examples/eve-universe/index.html)
-* [Add nodes incrementally](https://cdn.rawgit.com/frewsxcv/graphosaurus/0.5.0/examples/incremental/index.html)
+* [EVE Online map](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/eve-universe/index.html)
+* [Add nodes incrementally](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/incremental/index.html)
 
 ## Documentation
 
