@@ -1,8 +1,10 @@
 # Changes
 
-## master
+## 0.6.0
 
 * `get` prefix on method names removed
+* Fix bug where graphs don't get draw with fewer than six nodes
+* Upgrade from THREE 0.73.0 to THREE 0.75.0
 
 ## 0.5.0
 
