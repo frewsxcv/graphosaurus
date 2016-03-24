@@ -86,7 +86,7 @@ module.exports = (function () {
 
     Frame.prototype._numNodes = function () {
         var bufferAttr = this.points.getAttribute('position');
-        return bufferAttr.count / bufferAttr.itemSize;
+        return bufferAttr.count;
     };
 
     Frame.prototype.positionCamera = function () {
