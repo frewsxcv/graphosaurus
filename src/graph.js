@@ -27,6 +27,7 @@ module.exports = (function () {
         this._nodes = [];
         this._edges = [];
         this._frames = [];
+        this._renderNow = true;
         this._initProps(props);
     };
 
@@ -60,6 +61,19 @@ module.exports = (function () {
         return this;
     };
 
+    Graph.prototype.dontRender = function() {
+        this._renderNow = false;
+
+        return this;
+    };
+
+    Graph.prototype.doRender = function() {
+        this._renderNow = true;
+        this.syncDataToFrames();
+
+        return this;
+    };
+
     Graph.prototype.addNode = function (node) {
         var id = node.id();
 
@@ -69,6 +83,16 @@ module.exports = (function () {
 
         this._nodes.push(node);
         this.syncDataToFrames();
+
+        return this;
+    };
+
+    Graph.prototype.addNodes = function(nodes) {
+        this.dontRender();
+        nodes.forEach(function(node) {
+            this.addNode(node);
+        }, this);
+        this.doRender();
 
         return this;
     };
@@ -92,6 +116,16 @@ module.exports = (function () {
         this._resolveEdgeIds(edge);
         this._edges.push(edge);
         this.syncDataToFrames();
+
+        return this;
+    };
+
+    Graph.prototype.addEdges = function (edges) {
+        this.dontRender();
+        edges.forEach(function(edge) {
+            this.addEdge(edge);
+        }, this);
+        this.doRender();
 
         return this;
     };
@@ -141,10 +175,12 @@ module.exports = (function () {
         // TODO: instead of this method, nodes/edges should send an Event to the
         // Graph, which sends the Event to the Frame informing there has been
         // a changed and it needs to be rerendered
-        this._frames.forEach(function (frame) {
-            frame.syncDataFromGraph();
-            frame.forceRerender();
-        });
+        if (this._renderNow) {
+            this._frames.forEach(function (frame) {
+                frame.syncDataFromGraph();
+                frame.forceRerender();
+            });
+        }
     };
 
     return Graph;
