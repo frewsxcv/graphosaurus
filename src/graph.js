@@ -61,12 +61,18 @@ module.exports = (function () {
         return this;
     };
 
+    /**
+     * Stops the chart from rendering newly added data (e.g. edges/nodes)
+     */
     Graph.prototype.disableAutoRender = function() {
         this._autoRender = false;
 
         return this;
     };
 
+    /**
+     * Re-enables rendering newly added data (e.g. edges/nodes)
+     */
     Graph.prototype.enableAutoRender = function() {
         this._autoRender = true;
         this.syncDataToFrames();
@@ -87,6 +93,11 @@ module.exports = (function () {
         return this;
     };
 
+    /**
+     * Add multiple nodes at the same time
+     *
+     * @param {Array} nodes - array of Node objects to add, as you would using the addNode function
+     */
     Graph.prototype.addNodes = function(nodes) {
         nodes.forEach(function(node) {
             this.addNode(node);
@@ -118,6 +129,11 @@ module.exports = (function () {
         return this;
     };
 
+    /**
+     * Add multiple edges at the same time.
+     *
+     * @param {Array} edges - array of Edge objects, or edge parameters.
+     */
     Graph.prototype.addEdges = function (edges) {
         edges.forEach(function(edge) {
             this.addEdge(edge);
