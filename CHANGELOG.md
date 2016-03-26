@@ -1,5 +1,10 @@
 # Changes
 
+## 0.6.1
+
+* `Graph` can now add multiple nodes/edges at the same time
+ * https://github.com/frewsxcv/graphosaurus/pull/69
+
 ## 0.6.0
 
 * `get` prefix on method names removed
