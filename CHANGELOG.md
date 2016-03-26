@@ -1,5 +1,10 @@
 # Changes
 
+## 0.6.2
+
+* Added functions for purging all nodes/edges
+ * https://github.com/frewsxcv/graphosaurus/pull/71
+
 ## 0.6.1
 
 * `Graph` can now add multiple nodes/edges at the same time

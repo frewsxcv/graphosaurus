@@ -1,6 +1,6 @@
 {
   "name": "graphosaurus",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "A three-dimensional static graph viewer.",
   "repository": {
     "type": "git",
