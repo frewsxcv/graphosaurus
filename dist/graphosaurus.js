@@ -41939,6 +41939,15 @@ module.exports = (function () {
         return this;
     };
 
+    /**
+     * Removes all nodes from the Graph. Implies removing all the edges, as well, since they'd no longer be connected to anything.
+     */
+    Graph.prototype.purgeNodes = function() {
+        this._nodes.length = 0;
+        this._nodeIds = {};
+        this.purgeEdges();
+    };
+
     Graph.prototype.node = function (id) {
         return this._nodeIds[id];
     };
@@ -41973,6 +41982,13 @@ module.exports = (function () {
         }, this);
 
         return this;
+    };
+
+    /**
+     * Removes all the edges from the graph.
+     */
+    Graph.prototype.purgeEdges = function() {
+        this._edges.length = 0;
     };
 
     /**
