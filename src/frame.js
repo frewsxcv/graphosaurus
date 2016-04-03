@@ -294,6 +294,11 @@ module.exports = (function () {
             elem.addEventListener(
                 'click', createMouseHandler(this.graph._click), false);
         }
+
+        if (this.graph._rightClick) {
+            elem.addEventListener(
+                'contextmenu', createMouseHandler(this.graph._rightClick), false);
+        }
     };
 
     Frame.prototype._updateCameraBounds = (function () {

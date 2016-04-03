@@ -41789,6 +41789,11 @@ module.exports = (function () {
             elem.addEventListener(
                 'click', createMouseHandler(this.graph._click), false);
         }
+
+        if (this.graph._rightClick) {
+            elem.addEventListener(
+                'contextmenu', createMouseHandler(this.graph._rightClick), false);
+        }
     };
 
     Frame.prototype._updateCameraBounds = (function () {
@@ -41890,6 +41895,8 @@ module.exports = (function () {
         this._hover = properties.hover || undefined;
 
         this._click = properties.click || undefined;
+
+        this._rightClick = properties.rightClick || undefined;
 
         return this;
     };
