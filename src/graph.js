@@ -58,6 +58,8 @@ module.exports = (function () {
 
         this._click = properties.click || undefined;
 
+        this._rightclick = properties.rightclick || undefined;
+
         return this;
     };
 
