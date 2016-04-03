@@ -41790,9 +41790,9 @@ module.exports = (function () {
                 'click', createMouseHandler(this.graph._click), false);
         }
 
-        if (this.graph._rightclick) {
+        if (this.graph._rightClick) {
             elem.addEventListener(
-                'contextmenu', createMouseHandler(this.graph._rightclick), false);
+                'contextmenu', createMouseHandler(this.graph._rightClick), false);
         }
     };
 
@@ -41896,7 +41896,7 @@ module.exports = (function () {
 
         this._click = properties.click || undefined;
 
-        this._rightclick = properties.rightclick || undefined;
+        this._rightClick = properties.rightClick || undefined;
 
         return this;
     };
