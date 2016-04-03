@@ -1,5 +1,10 @@
 # Changes
 
+## 0.6.3
+
+* Added support for rightClick event
+ * https://github.com/frewsxcv/graphosaurus/pull/76
+
 ## 0.6.2
 
 * Added functions for purging all nodes/edges
