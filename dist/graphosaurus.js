@@ -41695,7 +41695,7 @@ module.exports = (function () {
         });
 
         this.edges = new THREE.BufferGeometry();
-        this.line = new THREE.Line(this.edges, material, THREE.LineSegments);
+        this.line = new THREE.LineSegments(this.edges, material);
         this.scene.add(this.line);
     };
 
