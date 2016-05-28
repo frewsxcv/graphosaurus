@@ -7,6 +7,8 @@ A three-dimensional static graph viewer.
 
 [![](https://i.imgur.com/1DHZvaC.gif)](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/eve-universe/index.html)
 
+*(click the image to try it out)*
+
 ## Demos
 
 * [EVE Online map](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/eve-universe/index.html)
@@ -44,7 +46,7 @@ If you open this up in your web browser, you'll see something that looks like th
 
 ![](https://i.imgur.com/LnAvptu.png)
 
-Look at that amazing square! Now lets create a graph, a couple nodes, and an edge between the nodes:
+Look at that amazing square! Now let's create a graph, a couple nodes, and an edge between the nodes:
 
 ```js
 var graph = G.graph()
