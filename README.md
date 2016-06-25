@@ -5,7 +5,7 @@
 
 A three-dimensional static graph viewer.
 
-[![](https://i.imgur.com/1DHZvaC.gif)](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/eve-universe/index.html)
+[![](https://i.imgur.com/U3DaXjZ.gif)](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/eve-universe/index.html)
 
 *(click the image to try it out)*
 
