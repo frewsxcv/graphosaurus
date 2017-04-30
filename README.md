@@ -5,18 +5,18 @@
 
 A three-dimensional static graph viewer.
 
-[![](http://i.imgur.com/qu7w99a.gif)](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/eve-universe/index.html)
+[![](http://i.imgur.com/qu7w99a.gif)](https://frewsxcv.github.io/graphosaurus/examples/eve-universe/index.html)
 
 *(click the image to try it out)*
 
 ## Demos
 
-* [EVE Online map](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/eve-universe/index.html)
-* [Add nodes incrementally](https://cdn.rawgit.com/frewsxcv/graphosaurus/HEAD/examples/incremental/index.html)
+* [EVE Online map](https://frewsxcv.github.io/graphosaurus/examples/eve-universe/index.html)
+* [Add nodes incrementally](https://frewsxcv.github.io/graphosaurus/examples/eve-universe/index.html)
 
 ## Documentation
 
-JSDoc generated API documentation can be found [here](https://cdn.rawgit.com/frewsxcv/graphosaurus/master/doc/index.html).
+JSDoc generated API documentation can be found [here](https://frewsxcv.github.io/graphosaurus/doc/).
 
 ## Twenty second tutorial
 
