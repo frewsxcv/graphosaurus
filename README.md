@@ -12,7 +12,7 @@ A three-dimensional static graph viewer.
 ## Demos
 
 * [EVE Online map](https://frewsxcv.github.io/graphosaurus/examples/eve-universe/index.html)
-* [Add nodes incrementally](https://frewsxcv.github.io/graphosaurus/examples/eve-universe/index.html)
+* [Add nodes incrementally](https://frewsxcv.github.io/graphosaurus/examples/incremental/index.html)
 
 ## Documentation
 
