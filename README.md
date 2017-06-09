@@ -84,6 +84,10 @@ While this is a very basic example, I hope I've demonstrated how simple it is to
 
 [John Conway](https://en.wikipedia.org/wiki/User:John.Conway)'s illustration of our glorious leader, the ~~[gryposaurus](https://en.wikipedia.org/wiki/gryposaurus)~~ graphosaurus.
 
+## Similar projects
+
+* https://github.com/anvaka/ngraph.pixel
+
 ## Copyright
 
 All files in this repository are licensed under [version two of the Mozilla Public License](https://github.com/frewsxcv/graphosaurus/blob/master/LICENSE.md).
