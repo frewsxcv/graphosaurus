@@ -86,7 +86,8 @@ While this is a very basic example, I hope I've demonstrated how simple it is to
 
 ## Similar projects
 
-* https://github.com/anvaka/ngraph.pixel
+* <https://github.com/anvaka/ngraph.pixel>
+* <https://github.com/NLeSC/DiVE>
 
 ## Copyright
 
