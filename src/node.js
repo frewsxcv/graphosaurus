@@ -12,6 +12,7 @@ module.exports = (function () {
      * @param {Object} props - Object containing optional properties of the Node
      * @param {Number|String|null} props.id - Optional unique identifier; Numbers will be converted into Strings; defaults to null
      * @param {Number|String} props.color - Hexadecimal or CSS-style string representation of a color; defaults to 'white'
+     * @param {Number|String} props.image - Path to image which node represents
      */
     var Node = function (pos, props) {
         this._pos = new THREE.Vector3().fromArray(pos);
@@ -34,6 +35,8 @@ module.exports = (function () {
         var id = properties.id !== undefined ? properties.id : null;
         this._id = id;
 
+        var imagePath = properties.imagePath !== undefined ? properties.imagePath : null;
+        this._imagePath = imagePath;
         return this;
     };
 
